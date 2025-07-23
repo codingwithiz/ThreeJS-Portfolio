@@ -58,50 +58,13 @@ export const clientReviews = [
 
 export const myProjects = [
   {
-    title: 'Podcastr - AI Podcast Platform',
-    desc: 'Podcastr is a revolutionary Software-as-a-Service platform that transforms the way podcasts are created. With advanced AI-powered features like text-to-multiple-voices functionality, it allows creators to generate diverse voiceovers from a single text input.',
+    title: 'AmanahBlock - Blockchain Charitable Platform',
+    desc: 'AmanahBlock is a decentralized charitable donation platform that combines blockchain technology, AI, and Shariah-compliant practices. Features multi-modal donations, milestone-driven disbursement, and AI-powered proposal screening for maximum transparency.',
     subdesc:
-      'Built as a unique Software-as-a-Service app with Next.js 14, Tailwind CSS, TypeScript, Framer Motion and Convex, Podcastr is designed for optimal performance and scalability.',
-    href: 'https://www.youtube.com/watch?v=zfAb95tJvZQ',
-    texture: '/textures/project/project1.mp4',
-    logo: '/assets/project-logo1.png',
-    logoStyle: {
-      backgroundColor: '#2A1816',
-      border: '0.2px solid #36201D',
-      boxShadow: '0px 0px 60px 0px #AA3C304D',
-    },
-    spotlight: '/assets/spotlight1.png',
-    tags: [
-      {
-        id: 1,
-        name: 'React.js',
-        path: '/assets/react.svg',
-      },
-      {
-        id: 2,
-        name: 'TailwindCSS',
-        path: 'assets/tailwindcss.png',
-      },
-      {
-        id: 3,
-        name: 'TypeScript',
-        path: '/assets/typescript.png',
-      },
-      {
-        id: 4,
-        name: 'Framer Motion',
-        path: '/assets/framer.png',
-      },
-    ],
-  },
-  {
-    title: 'LiveDoc - Real-Time Google Docs Clone',
-    desc: 'LiveDoc is a powerful collaborative app that elevates the capabilities of real-time document editing. As an enhanced version of Google Docs, It supports millions of collaborators simultaneously, ensuring that every change is captured instantly and accurately.',
-    subdesc:
-      'With LiveDoc, users can experience the future of collaboration, where multiple contributors work together in real time without any lag, by using Next.js and Liveblocks newest features.',
-    href: 'https://www.youtube.com/watch?v=y5vE8y_f_OM',
-    texture: '/textures/project/project2.mp4',
-    logo: '/assets/project-logo2.png',
+      'Built with React, Solidity smart contracts, and OpenAI integration. Supports crypto donations via Metamask, FPX for Malaysian banks, OCR-based zakat calculator, and DAO voting system for emergency fund allocation.',
+    href: 'https://github.com/szeyu/AmanahBlock',
+    texture: '/textures/project/amanahblock-project.mp4',
+    logo: '/assets/amanahblock-logo.png',
     logoStyle: {
       backgroundColor: '#13202F',
       border: '0.2px solid #17293E',
@@ -126,25 +89,25 @@ export const myProjects = [
       },
       {
         id: 4,
-        name: 'Framer Motion',
-        path: '/assets/framer.png',
+        name: 'OpenAI',
+        path: '/assets/openai.png',
       },
     ],
   },
   {
-    title: 'CarePulse - Health Management System',
-    desc: 'An innovative healthcare platform designed to streamline essential medical processes. It simplifies patient registration, appointment scheduling, and medical record management, providing a seamless experience for both healthcare providers and patients.',
+    title: 'SmartGrow - IoT Plant Monitoring & Care Automation System',
+    desc: 'SmartGrow is an IoT web application that automates plant care with real-time sensor data and actuator logic. Designed for both hobbyists and professionals, it monitors environmental conditions and automates watering, lighting, and ventilation systems.',
     subdesc:
-      'With a focus on efficiency, CarePulse integrantes complex forms and SMS notifications, by using Next.js, Appwrite, Twillio and Sentry that enhance operational workflows.',
-    href: 'https://www.youtube.com/watch?v=lEflo_sc82g',
-    texture: '/textures/project/project3.mp4',
-    logo: '/assets/project-logo3.png',
+      'Built with React, Firebase, and Node.js integration with IoT sensors. Features real-time monitoring of soil moisture, temperature, and humidity with automated plant care based on plant-specific profiles and environmental thresholds.',
+    href: 'https://smartgrow-kappa.vercel.app/',
+    texture: '/textures/project/smartgrow-project.mp4',
+    logo: '/assets/smartgrow-logo.svg',
     logoStyle: {
-      backgroundColor: '#60f5a1',
-      background:
-        'linear-gradient(0deg, #60F5A150, #60F5A150), linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(208, 213, 221, 0.8) 100%)',
-      border: '0.2px solid rgba(208, 213, 221, 1)',
-      boxShadow: '0px 0px 60px 0px rgba(35, 131, 96, 0.3)',
+      backgroundColor: '#F0F9FF',
+      border: '0.2px solid #0891B2',
+      
+      boxShadow: '0px 0px 60px 0px #06B6D44D',
+      
     },
     spotlight: '/assets/spotlight3.png',
     tags: [
@@ -155,29 +118,66 @@ export const myProjects = [
       },
       {
         id: 2,
-        name: 'TailwindCSS',
-        path: 'assets/tailwindcss.png',
+        name: 'Firebase',
+        path: 'assets/firebase-logo.png',
       },
       {
         id: 3,
-        name: 'TypeScript',
-        path: '/assets/typescript.png',
+        name: 'Node.js',
+        path: '/assets/node-js.png',
       },
       {
         id: 4,
-        name: 'Framer Motion',
-        path: '/assets/framer.png',
+        name: 'IoT',
+        path: '/assets/IoT-logo.jpg',
       },
     ],
   },
   {
-    title: 'Horizon - Online Banking Platform',
-    desc: 'Horizon is a comprehensive online banking platform that offers users a centralized finance management dashboard. It allows users to connect multiple bank accounts, monitor real-time transactions, and seamlessly transfer money to other users.',
+    title: 'NiagaMap - AI-Driven GIS Location System',
+    desc: 'NiagaMap is an intelligent geographical information system that leverages GenAI and rule-based modeling to generate dynamic business location suitability maps. The platform features interactive spatial analysis with real-time visualization and an AI-powered chatbot for natural language location queries and recommendations.',
     subdesc:
-      'Built with Next.js 14 Appwrite, Dwolla and Plaid, Horizon ensures a smooth and secure banking experience, tailored to meet the needs of modern consumers.',
-    href: 'https://www.youtube.com/watch?v=PuOVqP_cjkE',
-    texture: '/textures/project/project4.mp4',
-    logo: '/assets/project-logo4.png',
+      'Built with Vite, JavaScript, and Node.js backend integration with ArcGIS mapping services, OpenAI conversational AI, and dockerized MSSQL database. Features comprehensive spatial analysis for foot traffic assessment, competitor density mapping, accessibility evaluation, and demographic insights for optimal business site selection.',
+    href: 'https://github.com/codingwithiz/FYP_1',
+    texture: '/textures/project/niagamap-project.mp4',
+    logo: '/assets/niagamap-logo.svg',
+    logoStyle: {
+      backgroundColor: '#2A1816',
+      border: '0.2px solid #36201D',
+      boxShadow: '0px 0px 60px 0px #AA3C304D',
+    },
+    spotlight: '/assets/spotlight1.png',
+    tags: [
+      {
+        id: 1,
+        name: 'React.js',
+        path: '/assets/react.svg',
+      },
+      {
+        id: 2,
+        name: 'ArcGIS',
+        path: 'assets/ArcGIS_logo.png',
+      },
+      {
+        id: 3,
+        name: 'OpenAI',
+        path: '/assets/openai.png',
+      },
+      {
+        id: 4,
+        name: 'MS SQL',
+        path: '/assets/ms-sql.png',
+      },
+    ],
+  },
+  {
+    title: 'Employee Connect Suite - HR Platform',
+    desc: 'Employee Connect Suite is a full-stack HR management system designed for entrepreneurs and SMEs. Features comprehensive employee management including leave applications, attendance tracking, payroll processing, and community collaboration tools for enhanced workplace productivity.',
+    subdesc:
+      'Built with React, Node.js, MongoDB, Microsoft Azure and TailwindCSS. Includes user authentication, automated leave management, real-time attendance tracking, salary processing with EPF/SOCSO integration, employee directory with advanced filtering, internal communication forums, and helpdesk for employee well-being initiatives.',
+    href: 'https://github.com/PoisonDarterz/WIF2003_G8',
+    texture: '/textures/project/ecs-project.mp4',
+    logo: '/assets/ecs-logo.png',
     logoStyle: {
       backgroundColor: '#0E1F38',
       border: '0.2px solid #0E2D58',
@@ -192,28 +192,28 @@ export const myProjects = [
       },
       {
         id: 2,
-        name: 'TailwindCSS',
-        path: 'assets/tailwindcss.png',
+        name: 'Node.js',
+        path: '/assets/node-js.png',
       },
       {
         id: 3,
-        name: 'TypeScript',
-        path: '/assets/typescript.png',
+        name: 'MongoDB',
+        path: '/assets/mongodb-logo.svg',
       },
       {
         id: 4,
-        name: 'Framer Motion',
-        path: '/assets/framer.png',
+        name: 'Azure',
+        path: '/assets/azure-logo.png',
       },
     ],
   },
   {
-    title: 'Imaginify - AI Photo Manipulation App',
-    desc: 'Imaginify is a groundbreaking Software-as-a-Service application that empowers users to create stunning photo manipulations using AI technology. With features like AI-driven image editing, a payments system, and a credits-based model.',
+    title: 'Social Media Influencer Analysis & Prediction Pipeline',
+    desc: 'Social Media Influencer Analysis & Prediction Pipeline is a comprehensive ML-powered platform that analyzes social media influencer performance and predicts engagement trends. Features advanced data collection, network analysis, AI-driven predictions, and interactive visualizations for strategic influencer marketing decisions.',
     subdesc:
-      'Built with Next.js 14, Cloudinary AI, Clerk, and Stripe, Imaginify combines cutting-edge technology with a user-centric approach. It can be turned into a side income or even a full-fledged business.',
-    href: 'https://www.youtube.com/watch?v=Ahwoks_dawU',
-    texture: '/textures/project/project5.mp4',
+      'Built with Python, Streamlit, and scikit-learn with comprehensive ML libraries. Features automated data collection via APIs, network analysis using NetworkX, NLP sentiment analysis with TextBlob, predictive modeling with RandomForest algorithms, interactive visualizations with Plotly, and recommendation systems for optimal influencer selection.',
+    href: 'https://github.com/codingwithiz/WIF3009-Project',
+    texture: '/textures/project/sna-project.mp4',
     logo: '/assets/project-logo5.png',
     logoStyle: {
       backgroundColor: '#1C1A43',
@@ -224,23 +224,23 @@ export const myProjects = [
     tags: [
       {
         id: 1,
-        name: 'React.js',
-        path: '/assets/react.svg',
+        name: 'Python',
+        path: '/assets/python-logo.png',
       },
       {
         id: 2,
-        name: 'TailwindCSS',
-        path: 'assets/tailwindcss.png',
+        name: 'Streamlit',
+        path: 'assets/streamlit-logo.png',
       },
       {
         id: 3,
-        name: 'TypeScript',
-        path: '/assets/typescript.png',
+        name: 'Sckit-learn',
+        path: '/assets/sklearn-logo.png',
       },
       {
         id: 4,
-        name: 'Framer Motion',
-        path: '/assets/framer.png',
+        name: 'Plotly',
+        path: '/assets/plotly-logo.svg',
       },
     ],
   },
