@@ -48,11 +48,11 @@ export const clientReviews = [
   },
   {
     id: 4,
-    name: 'Ether Smith',
-    position: 'CEO of BrightStar Enterprises',
-    img: 'assets/review4.png',
+    name: 'Sarvagjnaa Divya',
+    position: 'Head of Business Development at AIESEC in Universiti Malaya',
+    img: 'assets/review4 (1).jpeg',
     review:
-      'Adrian was a pleasure to work with. He understood our requirements perfectly and delivered a website that exceeded our expectations. His skills in both frontend backend dev are top-notch.',
+      'Ing Zhen\'s B2B skills are truly commendable. He possesses a deep understanding of business-to-business interactions and has a knack for forging meaningful partnerships and collaborations. His ability to connect with external stakeholders, negotiate effectively, and develop mutually beneficial relationships has been pivotal in advancing the goals and projects of our organization. Ing Zhen\'s dedication to creating win-win situations has consistently delivered positive results and expanded our reach.',
   },
 ];
 
