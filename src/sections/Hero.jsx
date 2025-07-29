@@ -65,21 +65,21 @@ const Hero = () => {
       }`}>
         {/* Introduction with enhanced styling - Better responsive spacing */}
         <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6">
-          <p className="text-lg sm:text-2xl lg:text-3xl xl:text-4xl font-medium text-white font-generalsans animate-slide-in-left">
+          <p className="text-lg sm:text-2xl lg:text-3xl xl:text-4xl font-medium text-white font-generalsans text-center animate-slide-in-left">
             Hi, I am <span className="text-shimmer font-bold">Ing Zhen</span> 
-            <span className="waving-hand ml-2">👋</span>
+            <span className="waving-hand">👋</span>
           </p>
           
-          <div className="hero_tag text-gray_gradient animate-slide-in-right">
+          <div className="hero_tag text-gray_gradient animate-slide-in-right text-center">
             <span className="inline-block">Software</span>
             <span className="inline-block ml-2 sm:ml-4 text-blue-400">Engineer</span>
           </div>
           
           {/* Animated subtitle - Better responsive text */}
-          <p className={`text-neutral-300 text-sm sm:text-base lg:text-lg font-light max-w-sm sm:max-w-lg lg:max-w-2xl mx-auto leading-relaxed transition-all duration-1000 delay-300 ${
+          <p className={`text-neutral-300 text-sm sm:text-base lg:text-lg font-light max-w-sm sm:max-w-lg lg:max-w-2xl mx-auto leading-relaxed text-center transition-all duration-1000 delay-300 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
           }`}>
-            Crafting digital experiences with modern technologies and innovative solutions
+            Debugging the world one line of code at a time
           </p>
         </div>
 
