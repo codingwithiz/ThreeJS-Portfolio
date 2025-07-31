@@ -47,6 +47,25 @@ const Hero = () => {
     setIsDialogOpen(!isDialogOpen);
   };
 
+  // Add this helper function inside the Hero component
+  const getResponsivePosition = (basePosition, mobileOffset, smallOffset) => {
+    if (isSmall) {
+      return [
+        basePosition[0] + smallOffset[0],
+        basePosition[1] + smallOffset[1],
+        basePosition[2] + smallOffset[2]
+      ];
+    }
+    if (isMobile) {
+      return [
+        basePosition[0] + mobileOffset[0],
+        basePosition[1] + mobileOffset[1],
+        basePosition[2] + mobileOffset[2]
+      ];
+    }
+    return basePosition;
+  };
+
   return (
     <section className="min-h-screen w-full flex flex-col relative overflow-hidden" id="home">
       {/* Background gradient overlay */}
@@ -130,12 +149,12 @@ const Hero = () => {
 
             </HeroCamera>
 
-            {/* Supporting 3D elements positioned around the robot */}
-            <group>
-              <Target position={[sizes.targetPosition[0] - 6, sizes.targetPosition[1] - 2, sizes.targetPosition[2] - 3]} />
-              <ReactLogo position={[sizes.reactLogoPosition[0] - 4, sizes.reactLogoPosition[1] + 1, sizes.reactLogoPosition[2] - 2]} />
-              <Rings position={[sizes.ringPosition[0] - 7, sizes.ringPosition[1] - 1, sizes.ringPosition[2] - 4]} />
-              <Cube position={[sizes.cubePosition[0] + 5, sizes.cubePosition[1] + 1, sizes.cubePosition[2] - 2]} />  
+            {/* Supporting 3D elements positioned around the robot - Responsive positioning */}
+             <group>
+              <Target position={sizes.targetPosition} />
+              <ReactLogo position={sizes.reactLogoPosition} />
+              <Rings position={sizes.ringPosition} />
+              <Cube position={sizes.cubePosition} />
             </group>
           </Suspense>
         </Canvas>
@@ -171,7 +190,7 @@ const Hero = () => {
         onDialogToggle={handleDialogToggle}
         isDialogOpen={isDialogOpen}
       />
-W
+
       {/* Particle effects */}
       <div className="particles-container">
         {[...Array(8)].map((_, i) => (

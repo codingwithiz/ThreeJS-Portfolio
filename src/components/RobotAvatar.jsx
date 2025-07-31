@@ -17,7 +17,11 @@ const RobotAvatar = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [rotationSpeed, setRotationSpeed] = useState(0);
+  const [lastMouseX, setLastMouseX] = useState(0);
   const containerRef = useRef();
+  const dragStartRef = useRef({ x: 0, time: 0 });
 
   const handleMouseMove = (e) => {
     if (containerRef.current) {
@@ -25,12 +29,59 @@ const RobotAvatar = () => {
       const x = (e.clientX - rect.left - rect.width / 2) / (rect.width / 2);
       const y = (e.clientY - rect.top - rect.height / 2) / (rect.height / 2);
       setMousePosition({ x, y });
+
+      // Handle dragging rotation
+      if (isDragging) {
+        const currentMouseX = e.clientX;
+        const deltaX = currentMouseX - lastMouseX;
+        setRotationSpeed(deltaX * 0.02); // Adjust sensitivity
+        setLastMouseX(currentMouseX);
+      }
     }
   };
 
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+    setLastMouseX(e.clientX);
+    dragStartRef.current = { x: e.clientX, time: Date.now() };
+    
+    // Add global mouse events for smooth dragging
+    document.addEventListener('mousemove', handleGlobalMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleGlobalMouseMove = (e) => {
+    if (isDragging) {
+      const currentMouseX = e.clientX;
+      const deltaX = currentMouseX - lastMouseX;
+      setRotationSpeed(deltaX * 0.02); // Adjust sensitivity
+      setLastMouseX(currentMouseX);
+    }
+  };
+
+  const handleMouseUp = (e) => {
+    setIsDragging(false);
+    
+    // Calculate if this was a click (small movement and short duration)
+    const dragDistance = Math.abs(e.clientX - dragStartRef.current.x);
+    const dragDuration = Date.now() - dragStartRef.current.time;
+    const isClick = dragDistance < 5 && dragDuration < 300;
+    
+    if (isClick) {
+      handleDialogToggle();
+    }
+    
+    // Remove global event listeners
+    document.removeEventListener('mousemove', handleGlobalMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
+
   const handleMouseLeave = () => {
-    setMousePosition({ x: 0, y: 0 });
-    setIsHovered(false);
+    if (!isDragging) {
+      setMousePosition({ x: 0, y: 0 });
+      setIsHovered(false);
+    }
   };
 
   const handleDialogToggle = () => {
@@ -48,19 +99,19 @@ const RobotAvatar = () => {
         ref={containerRef}
         className={`fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-20 cursor-pointer transform transition-all duration-600 ${
           isHovered ? 'scale-110' : 'scale-100'
-        } animate-slide-in-bottom`}
+        } ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} animate-slide-in-bottom`}
         style={{
           animation: 'slideInBottom 0.6s ease-out 1s both',
         }}
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={handleMouseLeave}
-        onClick={handleDialogToggle}
+        onMouseDown={handleMouseDown}
       >
         {/* Enhanced glow effect */}
         <div className={`absolute inset-0 rounded-full transition-all duration-300 ${
           isHovered ? 'shadow-2xl shadow-blue-400/40' : 'shadow-lg shadow-blue-400/25'
-        }`} />
+        } ${isDragging ? 'shadow-2xl shadow-purple-400/50' : ''}`} />
         
         {/* Enhanced pulse animation */}
         <div className="absolute inset-0 rounded-full bg-blue-400/10 animate-ping" />
@@ -69,7 +120,7 @@ const RobotAvatar = () => {
         {/* Larger Robot container */}
         <div className={`relative w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-md rounded-full border-2 border-blue-400/30 overflow-hidden transform transition-transform duration-200 ${
           isHovered ? 'scale-105 border-blue-400/50' : 'scale-100'
-        }`}>
+        } ${isDragging ? 'border-purple-400/50 shadow-lg' : ''}`}>
           {/* Canvas for 3D Robot - Optimized and Properly Centered */}
           <Canvas 
             className="w-full h-full"
@@ -89,6 +140,9 @@ const RobotAvatar = () => {
                 mousePosition={mousePosition}
                 isHovered={isHovered}
                 isDialogOpen={isDialogOpen}
+                isDragging={isDragging}
+                rotationSpeed={rotationSpeed}
+                setRotationSpeed={setRotationSpeed}
                 onLoad={() => setIsLoaded(true)}
               />
             </Suspense>
@@ -104,18 +158,20 @@ const RobotAvatar = () => {
             </div>
           )}
           
-          {/* Enhanced notification dot */}
-          {!isDialogOpen && (
-            <div className="absolute top-2 right-2 w-4 h-4 bg-green-400 rounded-full border-2 border-gray-900 animate-pulse shadow-lg shadow-green-400/30" />
-          )}
-          
           {/* Enhanced hover text */}
-          {isHovered && !isDialogOpen && (
+          {isHovered && !isDialogOpen && !isDragging && (
             <div className={`absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black/90 text-white text-sm px-3 py-2 rounded-lg whitespace-nowrap transition-all duration-200 border border-blue-400/30 ${
               isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
             }`}>
-              Click to chat!
+              Click to chat! Drag to rotate!
               <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-black/90"></div>
+            </div>
+          )}
+
+          {/* Drag indicator */}
+          {isDragging && (
+            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-purple-600/90 text-white text-xs px-2 py-1 rounded-md">
+              Rotating...
             </div>
           )}
         </div>
@@ -144,9 +200,18 @@ const RobotAvatar = () => {
 };
 
 // Enhanced Interactive Robot component for the avatar - Better positioned to fill circle
-const InteractiveRobotAvatar = ({ mousePosition, isHovered, isDialogOpen, onLoad }) => {
+const InteractiveRobotAvatar = ({ 
+  mousePosition, 
+  isHovered, 
+  isDialogOpen, 
+  isDragging, 
+  rotationSpeed, 
+  setRotationSpeed, 
+  onLoad 
+}) => {
   const robotRef = useRef();
   const [loaded, setLoaded] = useState(false);
+  const [manualRotationY, setManualRotationY] = useState(0);
 
   useFrame((state) => {
     if (robotRef.current) {
@@ -154,23 +219,34 @@ const InteractiveRobotAvatar = ({ mousePosition, isHovered, isDialogOpen, onLoad
       const floatingOffset = Math.sin(state.clock.elapsedTime * 1.5) * 0.06; // Reduced range
       robotRef.current.position.y = -0.2 + floatingOffset; // Moved down to fill bottom gap
       
-      // Enhanced mouse-based rotation with more dramatic effects
-      if (isHovered && mousePosition) {
-        robotRef.current.rotation.y = mousePosition.x * Math.PI * 0.5;
-        robotRef.current.rotation.x = mousePosition.y * 0.3;
-        robotRef.current.rotation.z = mousePosition.x * 0.15;
+      if (isDragging) {
+        // Manual rotation when dragging
+        setManualRotationY(prev => prev + rotationSpeed);
+        robotRef.current.rotation.y = manualRotationY;
+        
+        // Apply some damping to the rotation speed
+        setRotationSpeed(prev => prev * 0.95);
+        
+        // Additional subtle animations during drag
+        robotRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 2) * 0.05;
+        robotRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 1.5) * 0.03;
+      } else if (isHovered && mousePosition && !isDialogOpen) {
+        // Enhanced mouse-based rotation with more dramatic effects
+        robotRef.current.rotation.y = manualRotationY + mousePosition.x * Math.PI * 0.3;
+        robotRef.current.rotation.x = mousePosition.y * 0.2;
+        robotRef.current.rotation.z = mousePosition.x * 0.1;
       } else {
         // Enhanced idle animation - keeping robot centered
-        robotRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.6) * 0.3;
-        robotRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.4) * 0.1;
-        robotRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
+        robotRef.current.rotation.y = manualRotationY + Math.sin(state.clock.elapsedTime * 0.6) * 0.2;
+        robotRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.4) * 0.08;
+        robotRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.04;
       }
       
       // Excited animation when dialog is open - controlled movement
       if (isDialogOpen) {
-        robotRef.current.rotation.y += Math.sin(state.clock.elapsedTime * 4) * 0.2;
+        robotRef.current.rotation.y += Math.sin(state.clock.elapsedTime * 4) * 0.15;
         // Additional floating animation when dialog is open
-        robotRef.current.position.y += Math.sin(state.clock.elapsedTime * 6) * 0.03;
+        robotRef.current.position.y += Math.sin(state.clock.elapsedTime * 6) * 0.02;
       }
 
       // Trigger onLoad callback
