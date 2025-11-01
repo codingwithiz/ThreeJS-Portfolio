@@ -16,11 +16,11 @@
   <h3 align="center">Ing Zhen's Interactive 3D Portfolio</h3>
 
    <div align="center">
-     A cutting-edge, interactive portfolio showcasing software engineering expertise through immersive 3D experiences, complete with AI-powered assistance and comprehensive analytics.
+     A cutting-edge, interactive portfolio showcasing software engineering expertise through immersive 3D experiences, complete with AI-powered assistance, integrated resume viewer, and comprehensive analytics.
     </div>
 
   <div align="center">
-    <a href="https://ingzhenhao.github.io/threejs-portfolio/" target="_blank">🌟 Live Demo</a> | 
+    <a href="https://github.com/codingwithiz/ThreeJS-Portfolio" target="_blank">🌟 Live Demo</a> | 
     <a href="#quick-start">🚀 Quick Start</a> | 
     <a href="#features">✨ Features</a>
   </div>
@@ -40,7 +40,7 @@
 
 ## 🤖 Introduction
 
-This is a state-of-the-art 3D portfolio built with React.js, Three.js, and advanced web technologies. It showcases modern software engineering practices through interactive 3D experiences, featuring a custom avaturn character, AI-powered robot assistant, and comprehensive user analytics.
+This is a state-of-the-art 3D portfolio built with React.js, Three.js, and advanced web technologies. It showcases modern software engineering practices through interactive 3D experiences, featuring a custom avaturn character, AI-powered robot assistant with integrated resume viewer, and comprehensive user analytics.
 
 **"Debugging the world one line of code at a time"**
 
@@ -57,7 +57,8 @@ This portfolio represents Ing Zhen's journey as a Software Engineer, specializin
 Built upon the excellent foundation provided by **Adrian Hajdin** from [JavaScript Mastery](https://www.youtube.com/@javascriptmastery). This project has been extensively customized and enhanced with:
 
 - Custom 3D character modeling and animations
-- Interactive robot assistant with AI capabilities
+- Interactive robot assistant with AI capabilities and resume integration
+- Integrated PDF resume viewer with download functionality
 - Advanced mobile optimizations
 - Comprehensive analytics integration
 - Professional project showcases and real work experience
@@ -90,6 +91,7 @@ Built upon the excellent foundation provided by **Adrian Hajdin** from [JavaScri
 - **EmailJS** - Contact form functionality
 - **Vercel Analytics** - User behavior tracking
 - **GitHub Pages** - Static site hosting
+- **PDF.js** - Integrated resume viewer
 
 ### **Development Tools**
 
@@ -114,9 +116,36 @@ Built upon the excellent foundation provided by **Adrian Hajdin** from [JavaScri
 
 - **360° Drag Rotation**: Smooth rotation with momentum and damping
 - **Smart Interaction Detection**: Distinguishes between clicks and drags
-- **Multi-step Dialog System**: Engaging conversation flow
+- **Multi-step Dialog System**: Engaging conversation flow with navigation
+- **Integrated Resume Access**: Direct access to view and download resume
+- **Section Navigation**: Smart navigation to About, Projects, Experience, References, and Contact sections
 - **Floating Animation**: Follows page scroll dynamically
 - **Visual Feedback**: Hover effects, drag indicators, and status messages
+
+### 📄 **Resume Integration System**
+
+👉 **Shared Resume Modal Component**: Reusable PDF viewer accessible from multiple sections:
+
+- **Full-Screen PDF Viewer**: High-quality resume display with native browser controls
+- **Professional Header**: Gradient design with action buttons
+- **Download Functionality**: One-click PDF download with custom filename
+- **Responsive Design**: Optimized viewing across all devices
+- **Smooth Animations**: Fade-in transitions and backdrop blur
+- **Close on Click Outside**: Intuitive modal dismissal
+
+👉 **Multi-Section Resume Access**:
+
+- **About Section**: Prominent "View Resume" and "Download" buttons in introduction card
+- **AI Robot Dialog**: Resume viewing option in every conversation step
+- **Consistent UX**: Same modal experience across all access points
+- **Debug-Ready**: Console logging for troubleshooting
+
+👉 **Resume Features**:
+
+- **PDF Embedding**: Native browser PDF rendering with zoom and navigation
+- **Mobile Optimized**: Touch-friendly controls and responsive layout
+- **Quick Download**: Direct download without opening new tab
+- **Professional Presentation**: Matches portfolio's design language
 
 ### 📱 **Responsive Design Excellence**
 
@@ -153,26 +182,36 @@ Built upon the excellent foundation provided by **Adrian Hajdin** from [JavaScri
 👉 **Interactive About Section**: Bento grid layout featuring:
 
 - Personal introduction with custom imagery
+- **Resume Access Buttons**: View and download options with Button components
 - Tech stack visualization
 - Interactive 3D globe showing location (Malaysia)
 - One-click email copy functionality
 - Professional skills and passion statement
+
+👉 **Professional References Section**: Dedicated section showcasing:
+
+- Recommendations from supervisors and mentors
+- Career endorsements from Maxis Berhad, LTL Global Telecom
+- Academic references and professional testimonials
+- Accessible via robot dialog and direct navigation
 
 ### 📊 **Analytics & Monitoring**
 
 👉 **Vercel Analytics Integration**: Comprehensive user tracking:
 
 - Page view analytics
-- User interaction monitoring
+- User interaction monitoring (including resume views and downloads)
 - Performance metrics
 - Geographic user distribution
 - Device and browser analytics
+- Resume engagement metrics
 
 👉 **Real-time Performance Monitoring**:
 
 - 3D rendering performance tracking
 - Mobile device optimization metrics
 - Loading time analysis
+- PDF viewer performance
 
 ### 🎨 **Advanced Visual Effects**
 
@@ -190,6 +229,7 @@ Built upon the excellent foundation provided by **Adrian Hajdin** from [JavaScri
 - Smooth hover transitions and micro-interactions
 - Professional shadow mapping
 - Dynamic glow effects
+- Modal transitions and animations
 
 ### 📧 **Communication Features**
 
@@ -205,6 +245,7 @@ Built upon the excellent foundation provided by **Adrian Hajdin** from [JavaScri
 - LinkedIn professional profile
 - GitHub project repositories
 - Direct email contact option
+- Resume download for recruiters
 
 ## <a name="quick-start">🤸 Quick Start</a>
 
@@ -220,7 +261,7 @@ Ensure you have the following installed:
 
 ```bash
 # Clone the repository
-git clone https://github.com/ingzhenhao/threejs-portfolio.git
+git clone https://github.com/codingwithiz/ThreeJS-Portfolio.git
 cd threejs-portfolio
 
 # Install dependencies
@@ -244,6 +285,18 @@ VITE_APP_EMAILJS_RECEIVERID=your_emailjs_service_id
 NODE_ENV=development
 ```
 
+### **Resume Setup**
+
+Place your resume PDF in the `public/assets/` directory:
+
+```bash
+# Your resume should be at:
+public/assets/iz_resume.pdf
+
+# The file name should match the path in your code:
+# link.href = '/assets/iz_resume.pdf';
+```
+
 ### **Development Server**
 
 ```bash
@@ -253,6 +306,23 @@ npm run dev
 # Open your browser and navigate to:
 # http://localhost:5173
 ```
+
+### **Testing Resume Features**
+
+1. **Test in About Section**:
+
+   - Click "View Resume" button - should open modal
+   - Click "Download" button - should download PDF
+
+2. **Test in Robot Dialog**:
+
+   - Click robot avatar to open dialog
+   - Select "View Resume 📄" option
+   - Verify modal opens and PDF displays
+
+3. **Verify PDF Accessibility**:
+   - Navigate directly to: `http://localhost:5173/assets/iz_resume.pdf`
+   - Should display your PDF in browser
 
 ### **Production Build**
 
@@ -286,6 +356,7 @@ const App = () => {
       <About />
       <Projects />
       <Experience />
+      <References />
       <Contact />
       <Footer />
 
@@ -299,16 +370,323 @@ const App = () => {
 ### **Tracked Metrics**
 
 - **Page Views**: Individual section engagement
-- **User Interactions**: 3D element interactions, button clicks
-- **Performance**: Loading times, rendering performance
-- **Device Analytics**: Screen sizes, browser types
+- **User Interactions**: 3D element interactions, button clicks, resume views
+- **Resume Engagement**: View count, download count, time spent viewing
+- **Performance**: Loading times, rendering performance, PDF load times
+- **Device Analytics**: Screen sizes, browser types, mobile vs desktop usage
 - **Geographic Data**: Visitor locations and demographics
+
+### **Resume Analytics**
+
+Track resume engagement with custom events:
+
+```jsx
+// Example: Track resume views
+const handleViewResume = () => {
+  console.log('Resume viewed'); // Logged in analytics
+  setShowResume(true);
+};
+
+// Example: Track resume downloads
+const handleDownloadResume = () => {
+  console.log('Resume downloaded'); // Logged in analytics
+  // Download logic
+};
+```
 
 ### **Analytics Dashboard**
 
 Access your analytics at: [Vercel Analytics Dashboard](https://vercel.com/analytics)
 
+Monitor:
+
+- Total resume views and downloads
+- Section navigation patterns
+- User engagement flow
+- Device-specific metrics
+
 ## <a name="code-examples">🕸️ Code Examples</a>
+
+<details>
+<summary><code>components/ResumeModal.jsx</code> - Shared Resume Viewer Component</summary>
+
+```jsx
+import React from 'react';
+
+const ResumeModal = ({ isVisible, onClose }) => {
+  const handleDownloadResume = () => {
+    console.log('Download resume clicked');
+    const link = document.createElement('a');
+    link.href = '/assets/iz_resume.pdf';
+    link.download = 'Lee Ing Zhen Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+      <div className="relative w-[90vw] h-[90vh] max-w-4xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {/* Professional Header */}
+        <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+          <h2 className="text-xl font-bold">📄 Ing Zhen's Resume</h2>
+          <div className="flex gap-2">
+            <button
+              onClick={handleDownloadResume}
+              className="px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors duration-200 text-sm font-medium">
+              ⬇️ Download PDF
+            </button>
+            <button
+              onClick={onClose}
+              className="px-3 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors duration-200">
+              ✕
+            </button>
+          </div>
+        </div>
+
+        {/* PDF Viewer with Native Controls */}
+        <div className="w-full h-full">
+          <iframe
+            src="/assets/iz_resume.pdf#toolbar=1&navpanes=1&scrollbar=1"
+            className="w-full h-full border-none"
+            title="Ing Zhen Resume"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ResumeModal;
+```
+
+</details>
+
+<details>
+<summary><code>sections/About.jsx</code> - Resume Integration in About Section</summary>
+
+```jsx
+import { useState } from 'react';
+import Globe from 'react-globe.gl';
+import Button from '../components/Button.jsx';
+import ResumeModal from '../components/ResumeModal.jsx';
+
+const About = () => {
+  const [hasCopied, setHasCopied] = useState(false);
+  const [showResume, setShowResume] = useState(false);
+
+  const handleViewResume = () => {
+    console.log('View Resume clicked in About section');
+    setShowResume(true);
+  };
+
+  const handleDownloadResume = () => {
+    console.log('Download Resume clicked in About section');
+    const link = document.createElement('a');
+    link.href = '/assets/iz_resume.pdf';
+    link.download = 'Lee Ing Zhen Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <>
+      <section className="c-space my-20" id="about">
+        <div className="grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full">
+          <div className="col-span-1 xl:row-span-3">
+            <div className="grid-container">
+              <img src="assets/edited-grid1.png" alt="grid-1" className="w-full sm:h-[276px] h-fit object-contain" />
+
+              <div>
+                <p className="grid-headtext">Hi, I'm Ing Zhen</p>
+                <p className="grid-subtext">
+                  With expertise in software engineering and full-stack development, I have honed my skills in building
+                  scalable applications and robust software solutions using modern technologies and best practices.
+                </p>
+
+                {/* Resume Access Buttons */}
+                <div className="mt-6 flex gap-3">
+                  <Button
+                    name="View Resume"
+                    isBeam
+                    containerClass="flex-1 bg-blue-600 hover:bg-blue-700"
+                    onClick={handleViewResume}
+                  />
+                  <Button
+                    name="Download"
+                    containerClass="flex-1 bg-green-600 hover:bg-green-700"
+                    onClick={handleDownloadResume}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Other grid items... */}
+        </div>
+      </section>
+
+      {/* Shared Resume Modal */}
+      <ResumeModal isVisible={showResume} onClose={() => setShowResume(false)} />
+    </>
+  );
+};
+
+export default About;
+```
+
+</details>
+
+<details>
+<summary><code>components/RobotDialog.jsx</code> - AI Assistant with Resume Integration</summary>
+
+```jsx
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import ResumeModal from './ResumeModal.jsx';
+
+const RobotDialog = ({ isVisible, onClose, robotRef }) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const [showResume, setShowResume] = useState(false);
+  const [navigationMessage, setNavigationMessage] = useState('');
+
+  // Navigation helper with smooth scrolling
+  const navigateToSection = (sectionId, delay = 300) => {
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest',
+        });
+      }
+    }, delay);
+  };
+
+  // Enhanced navigation with section redirect
+  const handleNavigateAndClose = (sectionId, message, delay = 2000) => {
+    setCurrentStep(-1); // Show navigation message
+    setNavigationMessage(message);
+    navigateToSection(sectionId, 300);
+
+    setTimeout(() => {
+      onClose();
+      setCurrentStep(0); // Reset to main menu
+    }, delay);
+  };
+
+  const dialogSteps = [
+    {
+      message: "Hi there! 👋 I'm Ing Zhen's AI assistant. How can I help you today?",
+      options: [
+        {
+          text: 'Tell me about Ing Zhen',
+          action: () => handleNavigateAndClose('about', 'Let me take you to learn more about Ing Zhen! 🚀'),
+        },
+        {
+          text: 'View Resume 📄',
+          action: () => setShowResume(true),
+        },
+        {
+          text: 'Work experience',
+          action: () => handleNavigateAndClose('experience', 'Let me show you the professional journey! 💼'),
+        },
+        {
+          text: 'Show me projects',
+          action: () => handleNavigateAndClose('work', 'Check out these amazing projects! 💻'),
+        },
+        {
+          text: 'Professional references',
+          action: () => handleNavigateAndClose('references', 'Let me show you the professional references! 👥'),
+        },
+        {
+          text: 'Contact information',
+          action: () => handleNavigateAndClose('contact', "Let's get you connected! 📧"),
+        },
+      ],
+    },
+    // Additional conversation steps with resume access...
+  ];
+
+  const currentStepData = currentStep === -1 ? { message: navigationMessage, options: [] } : dialogSteps[currentStep];
+
+  return (
+    <>
+      <div
+        className={`fixed bottom-20 right-4 sm:bottom-24 sm:right-8 z-40 transition-all duration-300 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}>
+        <div className="bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-md rounded-2xl border border-blue-400/30 shadow-2xl shadow-blue-400/20 p-6 max-w-sm">
+          {/* Dialog Content */}
+          <div className="space-y-4">
+            <div className="flex items-start gap-3">
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold transition-all duration-300 ${
+                  currentStep === -1 ? 'bg-green-500' : 'bg-blue-500'
+                }`}>
+                {currentStep === -1 ? '🚀' : '🤖'}
+              </div>
+              <p className="text-white text-sm leading-relaxed flex-1">{currentStepData.message}</p>
+            </div>
+
+            {/* Interactive Options */}
+            {currentStep !== -1 && (
+              <div className="space-y-2">
+                {currentStepData.options.map((option, index) => (
+                  <motion.button
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={option.action}
+                    className="w-full p-3 bg-blue-600/20 hover:bg-blue-600/30 border border-blue-400/30 rounded-lg text-white text-sm transition-all duration-200 hover:border-blue-400/50 hover:shadow-lg hover:shadow-blue-400/20 text-left group">
+                    <span className="group-hover:translate-x-1 transition-transform duration-200 inline-block">
+                      {option.text}
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            )}
+
+            {/* Loading Animation */}
+            {currentStep === -1 && (
+              <div className="flex justify-center">
+                <div className="flex space-x-1">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                  <div
+                    className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                    style={{ animationDelay: '0.1s' }}></div>
+                  <div
+                    className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                    style={{ animationDelay: '0.2s' }}></div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-2 right-2 w-6 h-6 bg-gray-600/50 hover:bg-gray-600/70 rounded-full flex items-center justify-center text-white text-xs transition-colors duration-200">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      {/* Shared Resume Modal */}
+      <ResumeModal isVisible={showResume} onClose={() => setShowResume(false)} />
+    </>
+  );
+};
+
+export default RobotDialog;
+```
+
+</details>
 
 <details>
 <summary><code>components/Developer.jsx</code> - Custom 3D Avatar with Professional Animations</summary>
@@ -363,85 +741,6 @@ const Developer = ({ animationName = 'idle', ...props }) => {
 </details>
 
 <details>
-<summary><code>components/RobotAvatar.jsx</code> - Interactive Robot with 360° Rotation</summary>
-
-```jsx
-const RobotAvatar = () => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [rotationSpeed, setRotationSpeed] = useState(0);
-  const [manualRotationY, setManualRotationY] = useState(0);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  // Advanced drag detection and rotation logic
-  const handleMouseDown = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-    setLastMouseX(e.clientX);
-
-    // Global mouse event handling for smooth dragging
-    document.addEventListener('mousemove', handleGlobalMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-  };
-
-  const handleGlobalMouseMove = (e) => {
-    if (isDragging) {
-      const deltaX = e.clientX - lastMouseX;
-      setRotationSpeed(deltaX * 0.02); // Configurable rotation sensitivity
-      setLastMouseX(e.clientX);
-    }
-  };
-
-  const handleMouseUp = (e) => {
-    setIsDragging(false);
-
-    // Smart click vs drag detection
-    const dragDistance = Math.abs(e.clientX - dragStartRef.current.x);
-    const dragDuration = Date.now() - dragStartRef.current.time;
-    const isClick = dragDistance < 5 && dragDuration < 300;
-
-    if (isClick) {
-      setIsDialogOpen(!isDialogOpen); // Toggle dialog on click
-    }
-
-    // Cleanup global event listeners
-    document.removeEventListener('mousemove', handleGlobalMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-  };
-
-  return (
-    <div
-      className={`fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-20 cursor-pointer transform transition-all duration-600 ${
-        isDragging ? 'cursor-grabbing scale-110' : 'cursor-grab scale-100'
-      }`}
-      onMouseDown={handleMouseDown}>
-      {/* 3D Robot Canvas with professional lighting */}
-      <Canvas className="w-32 h-32 sm:w-40 sm:h-40">
-        <Suspense fallback={null}>
-          <PerspectiveCamera makeDefault position={[0, 0.5, 4]} fov={75} />
-          <ambientLight intensity={1} />
-          <directionalLight position={[2, 2, 2]} intensity={1.2} />
-          <pointLight position={[-1, -1, -1]} color="#0066ff" intensity={0.6} />
-
-          <InteractiveRobotAvatar
-            isDragging={isDragging}
-            rotationSpeed={rotationSpeed}
-            setRotationSpeed={setRotationSpeed}
-            manualRotationY={manualRotationY}
-            setManualRotationY={setManualRotationY}
-          />
-        </Suspense>
-      </Canvas>
-
-      {/* Interactive dialog system */}
-      <RobotDialog isVisible={isDialogOpen} onClose={() => setIsDialogOpen(false)} />
-    </div>
-  );
-};
-```
-
-</details>
-
-<details>
 <summary><code>constants/index.js</code> - Mobile-Optimized 3D Positioning</summary>
 
 ```js
@@ -480,17 +779,35 @@ export const workExperiences = [
 
 ## <a name="deployment">🚀 Deployment</a>
 
+### **Pre-Deployment Checklist**
+
+Before deploying, ensure:
+
+- ✅ Resume PDF is in `public/assets/iz_resume.pdf`
+- ✅ All environment variables are set
+- ✅ Resume modal works in development
+- ✅ PDF loads correctly in browser
+- ✅ Download functionality tested
+- ✅ Mobile responsiveness verified
+- ✅ Analytics integration confirmed
+
 ### **GitHub Pages Deployment**
 
 ```bash
 # Build the project
 npm run build
 
+# Test production build locally
+npm run preview
+
+# Verify resume access at:
+# http://localhost:4173/assets/iz_resume.pdf
+
 # Deploy to GitHub Pages
 npm run deploy
 
 # Your site will be available at:
-# https://ingzhenhao.github.io/threejs-portfolio
+# https://ingzhenlee-portfolio.vercel.app/
 ```
 
 ### **Vercel Deployment**
@@ -504,6 +821,9 @@ vercel deploy
 
 # For production deployment
 vercel --prod
+
+# Verify resume access at:
+# https://ingzhenlee-portfolio.vercel.app/
 ```
 
 ### **Manual Deployment Steps**
@@ -514,13 +834,21 @@ vercel --prod
    npm run build
    ```
 
-2. **Test Production Build Locally**:
+2. **Verify Resume Assets**:
+
+   ```bash
+   # Check if resume is in build output
+   ls dist/assets/iz_resume.pdf
+   ```
+
+3. **Test Production Build Locally**:
 
    ```bash
    npm run preview
+   # Test resume viewing and downloading
    ```
 
-3. **Deploy to Your Platform**:
+4. **Deploy to Your Platform**:
    - **GitHub Pages**: `npm run deploy`
    - **Vercel**: `vercel --prod`
    - **Netlify**: Drag and drop the `dist` folder
@@ -536,41 +864,67 @@ VITE_APP_EMAILJS_RECEIVERID=your_production_service_id
 NODE_ENV=production
 ```
 
+### **Post-Deployment Verification**
+
+After deployment, verify:
+
+1. **Resume Accessibility**:
+
+   - Direct URL: `https://ingzhenlee-portfolio.vercel.app/`
+   - About section buttons work
+   - Robot dialog resume option works
+   - Download functionality works
+
+2. **Cross-Browser Testing**:
+
+   - Test in Chrome, Firefox, Safari, Edge
+   - Verify PDF rendering in each browser
+   - Test mobile browsers (iOS Safari, Chrome Mobile)
+
+3. **Performance**:
+   - Check PDF load time
+   - Verify modal animations
+   - Test on different network speeds
+
 ## 📂 Project Architecture
 
 ```
 threejs-portfolio/
 ├── public/                     # Static assets
-│   ├── models/                # 3D models and animations
-│   │   ├── animations/        # FBX animation files
-│   │   └── iz_model.glb      # Custom avaturn character
-│   ├── assets/               # Images, icons, logos
-│   └── textures/             # 3D textures and materials
+│   ├── assets/                # Images, icons, PDFs
+│   │   └── iz_resume.pdf     # ⭐ Your resume PDF
+│   ├── models/               # 3D models and animations
+│   │   ├── animations/       # FBX animation files
+│   │   └── iz_model.glb     # Custom avaturn character
+│   └── textures/            # 3D textures and materials
 ├── src/
-│   ├── components/           # Reusable 3D components
-│   │   ├── Developer.jsx     # Custom character with animations
-│   │   ├── Robot.jsx         # Hero section robot
-│   │   ├── RobotAvatar.jsx   # Interactive assistant
-│   │   ├── RobotDialog.jsx   # AI conversation interface
-│   │   └── ...              # Other 3D elements
-│   ├── sections/            # Main page sections
-│   │   ├── Hero.jsx         # Landing section with 3D scene
-│   │   ├── About.jsx        # Bento grid layout
-│   │   ├── Projects.jsx     # Interactive project showcase
-│   │   ├── Experience.jsx   # Career timeline
-│   │   ├── Contact.jsx      # EmailJS contact form
-│   │   └── Footer.jsx       # Social links
-│   ├── constants/           # App configuration
-│   │   └── index.js         # Projects, experience, sizing data
-│   ├── hooks/              # Custom React hooks
-│   │   └── useAlert.js     # Alert management
-│   ├── App.jsx             # Main application component
-│   ├── main.jsx            # React root and providers
-│   └── index.css           # Global styles and animations
-├── package.json            # Dependencies and scripts
-├── vite.config.js         # Vite configuration
-├── tailwind.config.js     # Tailwind CSS configuration
-└── README.md              # Project documentation
+│   ├── components/          # Reusable components
+│   │   ├── Developer.jsx    # Custom character with animations
+│   │   ├── Robot.jsx        # Hero section robot
+│   │   ├── RobotAvatar.jsx  # Interactive assistant
+│   │   ├── RobotDialog.jsx  # AI conversation interface
+│   │   ├── ResumeModal.jsx  # ⭐ Shared resume viewer
+│   │   ├── Button.jsx       # Reusable button component
+│   │   └── ...             # Other 3D elements
+│   ├── sections/           # Main page sections
+│   │   ├── Hero.jsx        # Landing section with 3D scene
+│   │   ├── About.jsx       # ⭐ With resume buttons
+│   │   ├── Projects.jsx    # Interactive project showcase
+│   │   ├── Experience.jsx  # Career timeline
+│   │   ├── References.jsx  # Professional references
+│   │   ├── Contact.jsx     # EmailJS contact form
+│   │   └── Footer.jsx      # Social links
+│   ├── constants/          # App configuration
+│   │   └── index.js        # Projects, experience, sizing data
+│   ├── hooks/             # Custom React hooks
+│   │   └── useAlert.js    # Alert management
+│   ├── App.jsx            # Main application component
+│   ├── main.jsx           # React root and providers
+│   └── index.css          # Global styles and animations
+├── package.json           # Dependencies and scripts
+├── vite.config.js        # Vite configuration
+├── tailwind.config.js    # Tailwind CSS configuration
+└── README.md             # Project documentation
 ```
 
 ## 🎯 Performance Optimizations
@@ -581,6 +935,13 @@ threejs-portfolio/
 - **LOD (Level of Detail)**: Simplified models for distant objects
 - **Frustum Culling**: Only render objects in camera view
 - **Texture Optimization**: Compressed and optimized 3D textures
+
+### **Resume Loading Optimizations**
+
+- **Lazy Loading**: PDF loaded only when modal opens
+- **Browser Caching**: Resume cached for repeat visitors
+- **Preloading**: Optional preload on page load for faster access
+- **Compressed PDF**: Optimized PDF size for faster downloads
 
 ### **Code Optimizations**
 
@@ -595,8 +956,64 @@ threejs-portfolio/
 - **Viewport Meta**: Proper mobile scaling
 - **Performance Monitoring**: FPS tracking on mobile devices
 - **Memory Management**: Proper 3D object disposal
+- **PDF Mobile Rendering**: Optimized for mobile browsers
 
 ## 🔧 Customization Guide
+
+### **Updating Your Resume**
+
+1. **Replace PDF File**:
+
+   ```bash
+   # Replace the file at:
+   public/assets/iz_resume.pdf
+   ```
+
+2. **Update Download Filename** (optional):
+
+   ```jsx
+   // In ResumeModal.jsx
+   link.download = 'Your Name Resume.pdf';
+   ```
+
+3. **Test Changes**:
+   ```bash
+   npm run dev
+   # Verify PDF loads correctly
+   # Test view and download functionality
+   ```
+
+### **Customizing Resume Modal**
+
+```jsx
+// In ResumeModal.jsx - Change colors
+<div className="flex items-center justify-between p-4 bg-gradient-to-r from-your-color to-your-color text-white">
+  <h2 className="text-xl font-bold">📄 Your Name's Resume</h2>
+  {/* ... */}
+</div>
+```
+
+### **Adding Resume to Additional Sections**
+
+```jsx
+// In any section component
+import { useState } from 'react';
+import ResumeModal from '../components/ResumeModal.jsx';
+
+const YourSection = () => {
+  const [showResume, setShowResume] = useState(false);
+
+  return (
+    <>
+      <section>
+        <button onClick={() => setShowResume(true)}>View Resume</button>
+      </section>
+
+      <ResumeModal isVisible={showResume} onClose={() => setShowResume(false)} />
+    </>
+  );
+};
+```
 
 ### **Adding New Projects**
 
@@ -653,16 +1070,62 @@ export const myProjects = [
 
 ## 🛡️ Browser Support
 
-- **Chrome**: 90+ (Recommended)
-- **Firefox**: 88+
-- **Safari**: 14+
-- **Edge**: 90+
-- **Mobile Safari**: 14+
-- **Chrome Mobile**: 90+
+- **Chrome**: 90+ (Recommended) ✅
+- **Firefox**: 88+ ✅
+- **Safari**: 14+ ✅
+- **Edge**: 90+ ✅
+- **Mobile Safari**: 14+ ✅
+- **Chrome Mobile**: 90+ ✅
 
-**Note**: WebGL 2.0 support required for optimal 3D rendering.
+**Note**:
+
+- WebGL 2.0 support required for optimal 3D rendering
+- PDF viewing requires native browser PDF support or PDF.js
+- Resume features tested across all major browsers
 
 ## 🐛 Troubleshooting
+
+### **Resume Issues**
+
+**PDF Not Loading in Modal**:
+
+```bash
+# Check file exists
+ls public/assets/iz_resume.pdf
+
+# Verify URL in browser
+# Navigate to: http://localhost:5173/assets/iz_resume.pdf
+
+# Check console for errors
+# Open browser DevTools > Console
+```
+
+**Download Not Working**:
+
+```jsx
+// Add debug logging
+const handleDownloadResume = () => {
+  console.log('Download clicked');
+  console.log('File path:', '/assets/iz_resume.pdf');
+  // ... download logic
+};
+```
+
+**Modal Not Opening**:
+
+```jsx
+// Check state in component
+const [showResume, setShowResume] = useState(false);
+console.log('showResume state:', showResume);
+
+// Verify onClick handler
+<Button
+  onClick={() => {
+    console.log('Button clicked');
+    setShowResume(true);
+  }}
+/>;
+```
 
 ### **Common Issues**
 
@@ -699,6 +1162,17 @@ npm install
 npm run build
 ```
 
+**PDF Not Showing on Mobile**:
+
+```jsx
+// Ensure iframe has proper mobile styling
+<iframe
+  src="/assets/iz_resume.pdf"
+  className="w-full h-full border-none"
+  style={{ minHeight: '500px' }} // Add min-height for mobile
+/>
+```
+
 ## 🤝 <a name="contributing">Contributing</a>
 
 We welcome contributions! Here's how you can help improve this portfolio:
@@ -707,8 +1181,9 @@ We welcome contributions! Here's how you can help improve this portfolio:
 
 - 🐛 Bug fixes and performance improvements
 - ✨ New 3D interactive features
-- 📱 Mobile optimization enhancements
-- 🎨 UI/UX improvements
+- 📄 Resume viewer enhancements
+- 📱 Mobile optimization improvements
+- 🎨 UI/UX enhancements
 - 📚 Documentation updates
 
 ### **Development Workflow**
@@ -722,6 +1197,12 @@ git checkout -b feature/amazing-new-feature
 
 # Make your changes and test thoroughly
 npm run dev
+
+# Test resume features
+# - View resume in About section
+# - Test robot dialog resume access
+# - Verify download functionality
+# - Test on mobile devices
 
 # Commit with conventional commit format
 git commit -m "feat: add amazing new 3D interaction feature"
@@ -739,6 +1220,8 @@ git push origin feature/amazing-new-feature
 - Update documentation for new features
 - Ensure 3D performance optimization
 - Add analytics tracking for new interactions
+- Test resume features on all browsers
+- Verify mobile responsiveness
 
 ## 📄 License
 
@@ -748,10 +1231,11 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ### **Professional Links**
 
-- **🌐 Portfolio**: [ingzhenhao.github.io/threejs-portfolio](https://ingzhenhao.github.io/threejs-portfolio)
-- **💼 LinkedIn**: [Connect on LinkedIn](https://linkedin.com/in/ingzhenhao)
-- **🐱 GitHub**: [@ingzhenhao](https://github.com/ingzhenhao)
+- **🌐 Portfolio**: [codingwithiz/ThreeJS-Portfolio](https://github.com/codingwithiz/ThreeJS-Portfolio)
+- **💼 LinkedIn**: [Connect on LinkedIn](https://linkedin.com/in/ingzhenlee)
+- **🐱 GitHub**: [@codingwithiz](https://github.com/codingwithiz)
 - **📧 Email**: ingzhen2003@gmail.com
+- **📄 Resume**: View and download directly from the portfolio
 
 ### **Project Collaboration**
 
@@ -761,6 +1245,16 @@ For project collaborations, internship opportunities, or technical discussions a
 2. Email directly for immediate response
 3. Connect on LinkedIn for professional networking
 4. Follow on GitHub for latest project updates
+5. View resume for detailed qualifications
+
+### **Hiring & Recruitment**
+
+Recruiters and hiring managers:
+
+- 📄 **View Resume**: Click "View Resume" button in About section or robot dialog
+- ⬇️ **Download Resume**: One-click PDF download available
+- 📧 **Contact**: Use integrated contact form or email directly
+- 💼 **LinkedIn**: Connect for professional discussions
 
 ---
 
@@ -771,5 +1265,13 @@ For project collaborations, internship opportunities, or technical discussions a
 **Built with ❤️ and lots of ☕ by Ing Zhen - Software Engineer**
 
 _"Debugging the world one line of code at a time"_
+
+### 🎯 **Key Features**
+
+✅ Interactive 3D Experiences  
+✅ AI-Powered Robot Assistant  
+✅ Integrated PDF Resume Viewer  
+✅ Mobile-Optimized Design  
+✅ Professional Analytics
 
 </div>

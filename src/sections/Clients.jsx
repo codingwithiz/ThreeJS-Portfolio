@@ -2,7 +2,7 @@ import { clientReviews } from '../constants/index.js';
 
 const Clients = () => {
   return (
-    <section className="c-space my-20">
+    <section className="c-space my-20" id='references'>
       <h3 className="head-text">Professional References</h3>
 
       <div className="client-container">
