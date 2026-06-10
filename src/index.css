@@ -1,17 +1,130 @@
-@import url('https://fonts.cdnfonts.com/css/general-sans');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400..700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Terra Nocturne — warm organic dark (see DESIGN.md) */
+  --bg: #14110e;
+  --surface: #211b14;
+  --surface-light: #2a2118;
+  --edge: #33291e;
+  --ink: #f4ede2;
+  --ink-muted: #b7a893;
+  --amber: #e3a857;
+  --sage: #8fa67e;
+  --clay: #c75d43;
+  --ease-organic: cubic-bezier(0.22, 1, 0.36, 1);
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 
 * {
   scroll-behavior: smooth;
 }
 
 body {
-  background: #010103;
+  background: var(--bg);
+  color: var(--ink);
   font-family: 'General Sans', sans-serif;
   overflow-x: hidden;
+}
+
+/* Reusable film-grain overlay — apply to a relatively-positioned section */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grain);
+  background-size: 200px;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@layer components {
+  /* Terra Nocturne shared building blocks */
+  .section-shell {
+    @apply relative mx-auto w-full px-5 py-20 sm:px-8 sm:py-24 lg:px-12;
+  }
+  .section-label {
+    @apply mb-3 block text-xs uppercase tracking-[.3em] text-ink-muted;
+  }
+  .section-title {
+    @apply font-display text-3xl font-semibold text-ink sm:text-4xl lg:text-5xl;
+  }
+  .card {
+    @apply rounded-2xl border border-edge bg-surface p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-amber/30;
+  }
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-full border border-edge bg-surface-light px-3 py-1.5 text-sm text-ink-muted;
+  }
+}
+
+/* Blog post prose (react-markdown output) */
+.prose-terra {
+  color: var(--ink-muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+.prose-terra > * + * {
+  margin-top: 1.2rem;
+}
+.prose-terra h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 1.6rem;
+  margin-top: 2.5rem;
+}
+.prose-terra h3 {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 1.3rem;
+  margin-top: 2rem;
+}
+.prose-terra strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.prose-terra a {
+  color: var(--amber);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.prose-terra ul,
+.prose-terra ol {
+  padding-left: 1.4rem;
+}
+.prose-terra ul {
+  list-style: disc;
+}
+.prose-terra ol {
+  list-style: decimal;
+}
+.prose-terra li {
+  margin-top: 0.5rem;
+}
+.prose-terra blockquote {
+  border-left: 2px solid var(--amber);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--ink);
+}
+.prose-terra code {
+  background: var(--surface-light);
+  color: var(--amber);
+  padding: 0.12rem 0.4rem;
+  border-radius: 0.3rem;
+  font-size: 0.9em;
+}
+.prose-terra hr {
+  border: 0;
+  border-top: 1px solid var(--edge);
+  margin: 2rem 0;
 }
 
 @layer utilities {
@@ -670,5 +783,22 @@ body {
   
   .hero_tag span {
     animation: none;
+  }
+}
+
+/* Accessibility */
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }

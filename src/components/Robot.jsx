@@ -6,7 +6,7 @@ Source: https://sketchfab.com/3d-models/roboter-cute-f52981724a4443c79396b77a415
 Title: Roboter_cute
 */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 

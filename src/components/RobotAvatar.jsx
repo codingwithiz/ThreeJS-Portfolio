@@ -1,16 +1,9 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Suspense } from 'react';
 import { PerspectiveCamera } from '@react-three/drei';
 import Robot from './Robot.jsx';
-import RobotDialog from './RobotDialog.jsx';
-
-// Loading fallback component
-const RobotLoader = () => (
-  <div className="w-full h-full flex items-center justify-center">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
-  </div>
-);
+import ChatPanel from './ChatPanel.jsx';
 
 const RobotAvatar = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -110,31 +103,31 @@ const RobotAvatar = () => {
       >
         {/* Enhanced glow effect */}
         <div className={`absolute inset-0 rounded-full transition-all duration-300 ${
-          isHovered ? 'shadow-2xl shadow-blue-400/40' : 'shadow-lg shadow-blue-400/25'
-        } ${isDragging ? 'shadow-2xl shadow-purple-400/50' : ''}`} />
+          isHovered ? 'shadow-2xl shadow-amber/40' : 'shadow-lg shadow-amber/25'
+        } ${isDragging ? 'shadow-2xl shadow-amber/50' : ''}`} />
         
         {/* Enhanced pulse animation */}
-        <div className="absolute inset-0 rounded-full bg-blue-400/10 animate-ping" />
-        <div className="absolute inset-0 rounded-full bg-blue-400/5 animate-pulse" />
+        <div className="absolute inset-0 rounded-full bg-amber/10 animate-ping" />
+        <div className="absolute inset-0 rounded-full bg-amber/5 animate-pulse" />
         
         {/* Larger Robot container */}
-        <div className={`relative w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-md rounded-full border-2 border-blue-400/30 overflow-hidden transform transition-transform duration-200 ${
-          isHovered ? 'scale-105 border-blue-400/50' : 'scale-100'
-        } ${isDragging ? 'border-purple-400/50 shadow-lg' : ''}`}>
+        <div className={`relative w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-md rounded-full border-2 border-amber/30 overflow-hidden transform transition-transform duration-200 ${
+          isHovered ? 'scale-105 border-amber/50' : 'scale-100'
+        } ${isDragging ? 'border-amber/50 shadow-lg' : ''}`}>
           {/* Canvas for 3D Robot - Optimized and Properly Centered */}
-          <Canvas 
+          <Canvas
             className="w-full h-full"
+            frameloop="always"
             dpr={[1, 1.5]} // Limit pixel ratio for better performance
-            performance={{ min: 0.5 }} // Performance optimization
           >
             <Suspense fallback={null}>
               {/* Adjusted camera for better framing - closer and angled slightly down */}
               <PerspectiveCamera makeDefault position={[0, 0.5, 4]} fov={75} />
-              
+
               {/* Simplified lighting for better performance */}
               <ambientLight intensity={1} />
               <directionalLight position={[2, 2, 2]} intensity={1.2} />
-              <pointLight position={[-1, -1, -1]} color="#0066ff" intensity={0.6} />
+              <pointLight position={[-1, -1, -1]} color="#E3A857" intensity={0.6} />
               
               <InteractiveRobotAvatar 
                 mousePosition={mousePosition}
@@ -152,15 +145,15 @@ const RobotAvatar = () => {
           {!isLoaded && (
             <div className="absolute inset-0 bg-gray-900/80 flex items-center justify-center">
               <div className="flex flex-col items-center gap-2">
-                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-400"></div>
-                <span className="text-xs text-blue-400">Loading...</span>
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-amber"></div>
+                <span className="text-xs text-amber">Loading...</span>
               </div>
             </div>
           )}
           
           {/* Enhanced hover text */}
           {isHovered && !isDialogOpen && !isDragging && (
-            <div className={`absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black/90 text-white text-sm px-3 py-2 rounded-lg whitespace-nowrap transition-all duration-200 border border-blue-400/30 ${
+            <div className={`absolute -top-12 left-1/2 transform -translate-x-1/2 bg-black/90 text-white text-sm px-3 py-2 rounded-lg whitespace-nowrap transition-all duration-200 border border-amber/30 ${
               isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
             }`}>
               Click to chat! Drag to rotate!
@@ -170,7 +163,7 @@ const RobotAvatar = () => {
 
           {/* Drag indicator */}
           {isDragging && (
-            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-purple-600/90 text-white text-xs px-2 py-1 rounded-md">
+            <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-amber/90 text-white text-xs px-2 py-1 rounded-md">
               Rotating...
             </div>
           )}
@@ -190,11 +183,8 @@ const RobotAvatar = () => {
         `}</style>
       </div>
 
-      {/* Robot Dialog - Managed by RobotAvatar */}
-      <RobotDialog 
-        isVisible={isDialogOpen}
-        onClose={handleDialogClose}
-      />
+      {/* AI chat panel - Managed by RobotAvatar */}
+      <ChatPanel isOpen={isDialogOpen} onClose={handleDialogClose} />
     </>
   );
 };

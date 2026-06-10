@@ -5,8 +5,10 @@ export default {
     extend: {
       fontFamily: {
         generalsans: ['General Sans', 'sans-serif'],
+        display: ['Fraunces', 'serif'],
       },
       colors: {
+        // Legacy tokens (kept while sections are migrated to Terra Nocturne)
         black: {
           DEFAULT: '#000',
           100: '#010103',
@@ -22,9 +24,22 @@ export default {
           600: '#AFB0B6',
           500: '#62646C',
         },
-      },
-      backgroundImage: {
-        terminal: "url('/assets/terminal.png')",
+
+        // Terra Nocturne — warm organic dark (see DESIGN.md)
+        bg: '#14110E',
+        surface: {
+          DEFAULT: '#211B14',
+          light: '#2A2118',
+        },
+        edge: '#33291E',
+        ink: {
+          DEFAULT: '#F4EDE2',
+          muted: '#B7A893',
+        },
+        amber: '#E3A857',
+        accent: '#E3A857',
+        sage: '#8FA67E',
+        clay: '#C75D43',
       },
     },
   },

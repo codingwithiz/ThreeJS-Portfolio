@@ -1,31 +1,48 @@
+import { profile } from '../constants/index.js';
+
+const socials = [
+  { name: 'GitHub', href: profile.socials.github, icon: '/assets/github.svg' },
+  { name: 'LinkedIn', href: profile.socials.linkedin, icon: '/assets/linkedin.svg' },
+  { name: 'Instagram', href: profile.socials.instagram, icon: '/assets/instagram.svg' },
+];
+
 const Footer = () => {
   return (
-    <footer className="c-space pt-7 pb-3 border-t border-black-300 flex justify-between items-center flex-wrap gap-5">
-      <div className="text-white-500 flex gap-2">
-        <p>Terms & Conditions</p>
-        <p>|</p>
-        <p>Privacy Policy</p>
+    <footer className="border-t border-edge">
+      <div className="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
+        <div>
+          <a href="#home" className="font-display text-lg font-semibold text-ink">
+            {profile.name}
+            <span className="text-amber">.</span>
+          </a>
+          <p className="mt-1 text-sm text-ink-muted">{profile.tagline}</p>
+        </div>
+
+        <div className="flex items-center gap-3">
+          {socials.map((s) => (
+            <a
+              key={s.name}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={s.name}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-edge bg-surface transition-colors hover:border-amber/60">
+              <img
+                src={s.icon}
+                alt=""
+                className="h-1/2 w-1/2 object-contain"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
+            </a>
+          ))}
+        </div>
       </div>
 
-      <div className="flex gap-3">
-        <div className="social-icon flex items-center justify-center">
-          <a href="https://github.com/codingwithiz" className="flex items-center justify-center w-full h-full">
-            <img src="/assets/github.svg" alt="github" className="w-1/2 h-1/2" />
-          </a>
-        </div>
-        <div className="social-icon flex items-center justify-center">
-          <a href="https://www.linkedin.com/in/ingzhenlee" className="flex items-center justify-center w-full h-full">
-            <img src="/assets/linkedin.svg" alt="linkedin" className="w-1/2 h-1/2" />
-          </a>
-        </div>
-        <div className="social-icon flex items-center justify-center">
-          <a href="https://www.instagram.com/ingzhennn" className="flex items-center justify-center w-full h-full">
-            <img src="/assets/instagram.svg" alt="instagram" className="w-1/2 h-1/2" />
-          </a>
-        </div>
+      <div className="border-t border-edge/50">
+        <p className="mx-auto max-w-7xl px-5 py-4 text-xs text-ink-muted sm:px-8 lg:px-12">
+          © {new Date().getFullYear()} {profile.fullName}. Built with React, Three.js &amp; lots of ☕.
+        </p>
       </div>
-
-      <p className="text-white-500">© 2025 Ing Zhen Lee. All rights reserved.</p>
     </footer>
   );
 };
