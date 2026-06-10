@@ -1,209 +1,201 @@
-import { Leva } from 'leva';
-import { Suspense, useEffect, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { useMediaQuery } from 'react-responsive';
+import { Suspense, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
+import { useMediaQuery } from 'react-responsive';
+import { motion } from 'framer-motion';
 
-import Cube from '../components/Cube.jsx';
-import Rings from '../components/Rings.jsx';
-import ReactLogo from '../components/ReactLogo.jsx';
-import Button from '../components/Button.jsx';
-import Target from '../components/Target.jsx';
 import CanvasLoader from '../components/Loading.jsx';
-import HeroCamera from '../components/HeroCamera.jsx';
-import { calculateSizes } from '../constants/index.js';
-import Robot from '../components/Robot.jsx';
+import Developer from '../components/Developer.jsx';
 import RobotAvatar from '../components/RobotAvatar.jsx';
-import RobotDialog from '../components/RobotDialog.jsx';
+import { profile } from '../constants/index.js';
+
+const heroStats = [
+  { value: '2nd', label: 'Globally · Kaggle ML (250+ teams)' },
+  { value: 'RM12k', label: 'EY YTPC 2025 — National Champion' },
+  { value: 'First-Class', label: 'Honours · Computer Science, UM' },
+];
+
+// Staggered entrance for the hero copy
+const container = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
+};
+const item = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+
+// Gives the 3D avatar a gentle idle float and a subtle lean toward the cursor
+const AvatarRig = ({ isMobile, children }) => {
+  const ref = useRef();
+  useFrame((state) => {
+    const g = ref.current;
+    if (!g) return;
+    const t = state.clock.elapsedTime;
+    g.position.y = Math.sin(t * 1.2) * 0.06;
+    const targetY = isMobile ? 0 : state.pointer.x * 0.5;
+    const targetX = isMobile ? 0 : -state.pointer.y * 0.15;
+    g.rotation.y += (targetY - g.rotation.y) * 0.05;
+    g.rotation.x += (targetX - g.rotation.x) * 0.05;
+  });
+  return <group ref={ref}>{children}</group>;
+};
 
 const Hero = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
-  // Use media queries to determine screen size
-  const isSmall = useMediaQuery({ maxWidth: 440 });
   const isMobile = useMediaQuery({ maxWidth: 768 });
-  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1024 });
 
-  const sizes = calculateSizes(isSmall, isMobile, isTablet);
-
-  // Trigger entrance animations
-  useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // Calculate robot position and scale based on screen size
-  const getRobotProps = () => {
-    if (isSmall) return { position: [0, -1, 0], scale: [0.8, 0.8, 0.8] }; // Center on mobile
-    if (isMobile) return { position: [0, -0.5, 0], scale: [1, 1, 1] }; // Center on mobile
-    if (isTablet) return { position: [8, 0, 0], scale: [1.4, 1.4, 1.4] }; // Move further right
-    return { position: [10, 0.5, 0], scale: [1.8, 1.8, 1.8] }; // Move much further right
-  };
-
-  const robotProps = getRobotProps();
-
-  const handleDialogToggle = () => {
-    setIsDialogOpen(!isDialogOpen);
-  };
-
-  // Add this helper function inside the Hero component
-  const getResponsivePosition = (basePosition, mobileOffset, smallOffset) => {
-    if (isSmall) {
-      return [
-        basePosition[0] + smallOffset[0],
-        basePosition[1] + smallOffset[1],
-        basePosition[2] + smallOffset[2]
-      ];
-    }
-    if (isMobile) {
-      return [
-        basePosition[0] + mobileOffset[0],
-        basePosition[1] + mobileOffset[1],
-        basePosition[2] + mobileOffset[2]
-      ];
-    }
-    return basePosition;
+  const downloadResume = () => {
+    const link = document.createElement('a');
+    link.href = '/assets/iz_resume.pdf';
+    link.download = 'Lee Ing Zhen Resume.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <section className="min-h-screen w-full flex flex-col relative overflow-hidden" id="home">
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/40 pointer-events-none z-10" />
-      
-      {/* Animated background elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="floating-orb floating-orb-1" />
-        <div className="floating-orb floating-orb-2" />
-        <div className="floating-orb floating-orb-3" />
+    <section id="home" className="grain relative min-h-screen w-full overflow-hidden">
+      {/* Warm atmospheric background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'radial-gradient(120% 90% at 85% 8%, rgba(227,168,87,.10), transparent 55%), radial-gradient(90% 70% at 0% 100%, rgba(143,166,126,.08), transparent 55%)',
+          }}
+        />
+        {/* Topographic contour rings */}
+        <div
+          className="absolute right-[-15%] top-[6%] hidden lg:block"
+          style={{
+            width: '46vw',
+            height: '46vw',
+            opacity: 0.1,
+            background:
+              'repeating-radial-gradient(circle at center, transparent 0 27px, #E3A857 27px 28px)',
+            borderRadius: '50%',
+            WebkitMaskImage: 'radial-gradient(circle at center,#000 58%,transparent 72%)',
+            maskImage: 'radial-gradient(circle at center,#000 58%,transparent 72%)',
+          }}
+        />
       </div>
 
-      {/* Hero Content - Fixed responsive spacing */}
-      <div className={`w-full mx-auto flex flex-col justify-center min-h-screen px-4 sm:px-8 lg:px-16 relative z-20 transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}>
-        {/* Introduction with enhanced styling - Better responsive spacing */}
-        <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6">
-          <p className="text-lg sm:text-2xl lg:text-3xl xl:text-4xl font-medium text-white font-generalsans text-center animate-slide-in-left">
-            Hi, I am <span className="text-shimmer font-bold">Ing Zhen</span> 
-            <span className="waving-hand">👋</span>
-          </p>
-          
-          <div className="hero_tag text-gray_gradient animate-slide-in-right text-center">
-            <span className="inline-block">Software</span>
-            <span className="inline-block ml-2 sm:ml-4 text-blue-400">Engineer</span>
-          </div>
-          
-          {/* Animated subtitle - Better responsive text */}
-          <p className={`text-neutral-300 text-sm sm:text-base lg:text-lg font-light max-w-sm sm:max-w-lg lg:max-w-2xl mx-auto leading-relaxed text-center transition-all duration-1000 delay-300 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
-            Debugging the world one line of code at a time
-          </p>
-        </div>
+      <div className="relative z-10 mx-auto grid min-h-screen max-w-7xl grid-cols-1 gap-6 px-5 pb-16 pt-28 sm:px-8 lg:grid-cols-2 lg:gap-4 lg:px-12 lg:pb-0 lg:pt-0">
+        {/* LEFT — copy */}
+        <motion.div variants={container} initial="hidden" animate="show" className="flex flex-col justify-center lg:py-24">
+          <motion.p variants={item} className="font-display text-lg italic text-ink-muted sm:text-xl">
+            Hi, I am
+          </motion.p>
 
-        {/* Floating skill badges - Better responsive spacing */}
-        <div className={`flex flex-wrap justify-center gap-2 sm:gap-3 mt-6 sm:mt-8 lg:mt-12 transition-all duration-1000 delay-500 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-        }`}>
-          {['Software Development', 'Database Design', 'System Architecture', 'AI & ML', 'Cloud Computing'].map((skill, index) => (
-            <span 
-              key={skill}
-              className={`skill-badge text-xs sm:text-sm ${index % 2 === 0 ? 'animate-slide-in-left' : 'animate-slide-in-right'}`}
-              style={{ animationDelay: `${0.7 + index * 0.1}s` }}
-            >
-              {skill}
+          <motion.h1
+            variants={item}
+            className="font-display font-black leading-[.92] tracking-tight text-ink"
+            style={{ fontSize: 'clamp(3rem,11vw,7rem)' }}>
+            Ing Zhen<span className="text-amber">.</span>
+          </motion.h1>
+
+          <motion.p
+            variants={item}
+            className="mt-3 font-semibold uppercase tracking-[.12em] text-ink"
+            style={{ fontSize: 'clamp(1.1rem,3vw,1.9rem)' }}>
+            Software{' '}
+            <span className="font-display font-normal normal-case italic tracking-normal text-amber">
+              Engineer
             </span>
-          ))}
+          </motion.p>
+
+          <motion.div variants={item} className="mt-4 flex flex-wrap gap-2">
+            {profile.expertise.map((x) => (
+              <span
+                key={x}
+                className="rounded-full border border-amber/40 bg-amber/10 px-3 py-1 text-xs font-semibold uppercase tracking-[.1em] text-amber">
+                {x}
+              </span>
+            ))}
+          </motion.div>
+
+          <motion.p variants={item} className="mt-6 max-w-md text-base leading-relaxed text-ink-muted sm:text-lg">
+            I build intelligent automation systems at Maxis — UiPath RPA, Java/OSGi services and agentic
+            AI that turn enterprise complexity into software that ships.
+          </motion.p>
+
+          <motion.p variants={item} className="mt-5 flex items-center gap-2 text-sm text-ink-muted">
+            <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-sage" />
+            Open to <span className="text-ink">Software Engineering</span> &amp;{' '}
+            <span className="text-ink">AI Engineering</span> roles
+          </motion.p>
+
+          <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-3 sm:gap-4">
+            <a
+              href="#work"
+              className="rounded-2xl bg-amber px-6 py-3.5 font-semibold text-bg transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_34px_rgba(227,168,87,.3)]">
+              View Work
+            </a>
+            <button
+              onClick={downloadResume}
+              className="rounded-2xl border border-edge px-6 py-3.5 font-semibold text-ink transition-colors duration-200 hover:border-amber/60 hover:text-amber">
+              Download Résumé
+            </button>
+            <a
+              href="#contact"
+              className="text-sm text-ink-muted underline-offset-4 transition-colors hover:text-ink hover:underline">
+              or say hello →
+            </a>
+          </motion.div>
+
+          {/* Impact stats */}
+          <motion.div
+            variants={item}
+            className="mt-10 grid grid-cols-2 gap-x-6 gap-y-5 sm:flex sm:flex-wrap sm:gap-x-9">
+            {heroStats.map((s) => (
+              <div key={s.label}>
+                <div className="whitespace-nowrap font-display text-2xl font-semibold leading-none text-amber sm:text-3xl">
+                  {s.value}
+                </div>
+                <div className="mt-1.5 max-w-[16ch] text-[.72rem] leading-snug text-ink-muted sm:text-xs">
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </motion.div>
+        </motion.div>
+
+        {/* RIGHT — 3D avatar */}
+        <div className="relative h-[44vh] min-h-[300px] w-full lg:h-screen">
+          <Canvas>
+            <PerspectiveCamera makeDefault position={[0, 0, 6.5]} fov={42} />
+            <ambientLight intensity={0.55} />
+            <directionalLight position={[4, 6, 6]} intensity={1.6} color="#ffe6c0" />
+            <directionalLight position={[-6, 2, 2]} intensity={0.5} color="#cfe0c0" />
+            <spotLight position={[0, 8, -6]} angle={0.5} penumbra={1} intensity={0.8} color="#e3a857" />
+            <Suspense fallback={<CanvasLoader />}>
+              <AvatarRig isMobile={isMobile}>
+                <Developer animationName="idle" position={[0, -3, 0]} scale={2.6} />
+              </AvatarRig>
+            </Suspense>
+          </Canvas>
+
+          {/* Grounds the floating avatar by fading its base into the page */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-bg to-transparent" />
+
+          {!isMobile && (
+            <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 text-xs tracking-wide text-ink-muted/70">
+              move your mouse — I&apos;ll follow
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Enhanced 3D Canvas with Robot */}
-      <div className="w-full h-full absolute inset-0 z-0">
-        <Canvas className="w-full h-full">
-          <Suspense fallback={<CanvasLoader />}>
-            <Leva hidden />
-            <PerspectiveCamera makeDefault position={[0, 0, 30]} />
-            
-            {/* Enhanced lighting setup for robot */}
-            <ambientLight intensity={0.7} />
-            <directionalLight 
-              position={[10, 10, 10]} 
-              intensity={1.2} 
-              castShadow 
-              shadow-mapSize-width={1024}
-              shadow-mapSize-height={1024}
-            />
-            <pointLight position={[-10, -10, -10]} color="#0066ff" intensity={0.5} />
-            <spotLight 
-              position={[5, 10, 5]} 
-              angle={0.4} 
-              penumbra={1} 
-              intensity={1} 
-              color="#ffffff" 
-              castShadow
-            />
-            
-            {/* Robot with HeroCamera for mouse interaction */}
-            <HeroCamera isMobile={isMobile}>
+      {/* Scroll cue */}
+      <a
+        href="#about"
+        className="absolute bottom-5 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 text-ink-muted/70 transition-colors hover:text-amber lg:flex">
+        <span className="text-[.7rem] uppercase tracking-[.3em]">Scroll</span>
+        <span className="h-9 w-[1.5px] bg-gradient-to-b from-amber to-transparent" />
+      </a>
 
-            </HeroCamera>
-
-            {/* Supporting 3D elements positioned around the robot - Responsive positioning */}
-             <group>
-              <Target position={sizes.targetPosition} />
-              <ReactLogo position={sizes.reactLogoPosition} />
-              <Rings position={sizes.ringPosition} />
-              <Cube position={sizes.cubePosition} />
-            </group>
-          </Suspense>
-        </Canvas>
-      </div>
-
-      {/* Interactive CTA Section - Better positioning */}
-      <div className={`absolute bottom-4 sm:bottom-7 left-0 right-0 w-full z-20 px-4 sm:px-8 transition-all duration-1000 delay-700 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      }`}>
-        <div className="flex flex-col items-center gap-3 sm:gap-4">
-          {/* Robot interaction hint */}
-          <div className={`text-center text-neutral-400 text-xs sm:text-sm transition-all duration-1000 delay-800 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-          }`}>
-            <p className="hover:text-blue-400 transition-colors duration-300">
-              🤖 Move your mouse to interact with the robot
-            </p>
-          </div>
-          
-          {/* Enhanced CTA button */}
-          <a href="#about" className="w-fit group">
-            <Button 
-              name="Get Started" 
-              isBeam 
-              containerClass="sm:w-fit w-full sm:min-w-96 magnetic-btn hover-glow glass-effect" 
-            />
-          </a>
-        </div>
-      </div>
-
-      {/* Interactive Robot Avatar - Bottom Right */}
-      <RobotAvatar 
-        onDialogToggle={handleDialogToggle}
-        isDialogOpen={isDialogOpen}
-      />
-
-      {/* Particle effects */}
-      <div className="particles-container">
-        {[...Array(8)].map((_, i) => (
-          <div 
-            key={i}
-            className={`particle particle-${(i % 6) + 1}`}
-            style={{
-              animationDelay: `${i * 2}s`,
-              left: `${10 + i * 12}%`
-            }}
-          />
-        ))}
-      </div>
+      {/* AI chat trigger (restyled in a later phase) */}
+      <RobotAvatar />
     </section>
   );
 };

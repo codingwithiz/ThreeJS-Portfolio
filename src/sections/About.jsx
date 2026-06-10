@@ -1,28 +1,36 @@
-import { useState } from 'react';
-import Globe from 'react-globe.gl';
-import Button from '../components/Button.jsx';
-import ResumeModal from '../components/ResumeModal.jsx';
+import { useState, lazy, Suspense } from 'react';
+import { motion } from 'framer-motion';
+
+import SectionHeader from '../components/SectionHeader.jsx';
+import InView from '../components/InView.jsx';
+import { profile } from '../constants/index.js';
+
+const Globe = lazy(() => import('react-globe.gl'));
+
+const reveal = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+
+const Fact = ({ label, value }) => (
+  <div>
+    <dt className="text-[.7rem] uppercase tracking-[.2em] text-ink-muted/70">{label}</dt>
+    <dd className="mt-1 font-medium text-ink">{value}</dd>
+  </div>
+);
 
 const About = () => {
   const [hasCopied, setHasCopied] = useState(false);
-  const [showResume, setShowResume] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText('ingzhen2003@gmail.com');
+    navigator.clipboard.writeText(profile.email);
     setHasCopied(true);
-
-    setTimeout(() => {
-      setHasCopied(false);
-    }, 2000);
+    setTimeout(() => setHasCopied(false), 2000);
   };
 
-  const handleViewResume = () => {
-    setShowResume(true);
-  };
-
-  const handleDownloadResume = () => {
+  const downloadResume = () => {
     const link = document.createElement('a');
-    link.href = '/assets/iz_resume.pdf';
+    link.href = profile.resume;
     link.download = 'Lee Ing Zhen Resume.pdf';
     document.body.appendChild(link);
     link.click();
@@ -30,114 +38,112 @@ const About = () => {
   };
 
   return (
-    <>
-      <section className="c-space my-20" id="about">
-        <div className="grid xl:grid-cols-3 xl:grid-rows-6 md:grid-cols-2 grid-cols-1 gap-5 h-full">
-          <div className="col-span-1 xl:row-span-3">
-            <div className="grid-container">
-              <img src="assets/edited-grid1.png" alt="grid-1" className="w-full sm:h-[276px] h-fit object-contain" />
-
-              <div>
-                <p className="grid-headtext">Hi, I'm Ing Zhen</p>
-                <p className="grid-subtext">
-                  With expertise in software engineering and full-stack development, I have honed my skills in building scalable applications and robust software solutions using modern technologies and best practices.
-                </p>
-                
-                {/* Resume Buttons */}
-                <div className="mt-6 flex gap-3">
-                  <Button 
-                    name="View Resume" 
-                    isBeam 
-                    containerClass="flex-1 bg-blue-600 hover:bg-blue-700"
-                    onClick={handleViewResume}
-                  />
-                  <Button 
-                    name="Download" 
-                    containerClass="flex-1 bg-green-600 hover:bg-green-700"
-                    onClick={handleDownloadResume}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-1 xl:row-span-3">
-            <div className="grid-container">
-              <img src="assets/edited-grid2.png" alt="grid-2" className="w-full sm:h-[276px] h-fit object-contain" />
-
-              <div>
-                <p className="grid-headtext">Tech Stack</p>
-                <p className="grid-subtext">
-                  I specialize in JavaScript, React, Node.js, Java, and cloud technologies that allow me to build efficient, maintainable, and scalable software applications across the full stack.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-span-1 xl:row-span-4">
-            <div className="grid-container">
-              <div className="rounded-3xl w-full sm:h-[326px] h-fit flex justify-center items-center">
-                <Globe
-                  height={326}
-                  width={326}
-                  backgroundColor="rgba(0, 0, 0, 0)"
-                  backgroundImageOpacity={0.5}
-                  showAtmosphere
-                  showGraticules
-                  globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
-                  bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
-                  labelsData={[{ lat: 4.2105, lng: 101.9758, text: 'Malaysia', color: 'white', size: 15 }]}
-                />
-              </div>
-              <div>
-                <p className="grid-headtext">I'm very flexible with time zone communications & locations</p>
-                <p className="grid-subtext">I&apos;m based in Malaysia and open to remote work worldwide.</p>
-                <a href="#contact">
-                  <Button name="Contact Me" isBeam containerClass="w-full mt-10" />
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div className="xl:col-span-2 xl:row-span-3">
-            <div className="grid-container">
-              <img src="assets/grid3.png" alt="grid-3" className="w-full sm:h-[266px] h-fit object-contain" />
-
-              <div>
-                <p className="grid-headtext">My Passion for Software Engineering</p>
-                <p className="grid-subtext">
-                  I love solving complex problems through clean, efficient code and building software that makes a difference. Software engineering isn&apos;t just my profession—it&apos;s my passion. I enjoy learning new technologies and creating innovative solutions.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="xl:col-span-1 xl:row-span-2">
-            <div className="grid-container">
-              <img
-                src="assets/grid4.png"
-                alt="grid-4"
-                className="w-full md:h-[126px] sm:h-[276px] h-fit object-cover sm:object-top"
-              />
-
-              <div className="space-y-2">
-                <p className="grid-subtext text-center">Contact me</p>
-                <div className="copy-container" onClick={handleCopy}>
-                  <img src={hasCopied ? 'assets/tick.svg' : 'assets/copy.svg'} alt="copy" />
-                  <p className="lg:text-2xl md:text-xl font-medium text-gray_gradient text-white">ingzhen2003@gmail.com</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Resume Modal */}
-      <ResumeModal 
-        isVisible={showResume} 
-        onClose={() => setShowResume(false)} 
+    <section id="about" className="grain section-shell">
+      <SectionHeader
+        number="01"
+        label="About"
+        title={
+          <>
+            Engineer by craft, <span className="font-display italic text-amber">builder</span> by instinct.
+          </>
+        }
       />
-    </>
+
+      <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-14">
+        {/* Portrait + globe */}
+        <motion.div
+          className="lg:col-span-5"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={reveal}>
+          <div className="relative mx-auto max-w-sm">
+            <div className="relative overflow-hidden rounded-[1.6rem]">
+              <img
+                src="/assets/iz-portrait.png"
+                alt="Portrait of Ing Zhen"
+                className="aspect-[4/5] w-full object-cover"
+                style={{ filter: 'saturate(.92) contrast(1.02)' }}
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-amber/25 via-transparent to-sage/15 mix-blend-overlay" />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-bg/50 to-transparent" />
+            </div>
+            <span className="pointer-events-none absolute -left-3 -top-3 h-10 w-10 border-l-2 border-t-2 border-amber/70" />
+            <span className="pointer-events-none absolute -bottom-3 -right-3 h-10 w-10 border-b-2 border-r-2 border-amber/70" />
+          </div>
+
+          <div className="mt-8 flex items-center gap-4">
+            <div className="h-[120px] w-[120px] shrink-0">
+              <InView className="h-full w-full" fallback={<div className="h-full w-full rounded-full bg-surface-light" />}>
+                <Suspense fallback={<div className="h-full w-full rounded-full bg-surface-light" />}>
+                  <Globe
+                    height={120}
+                    width={120}
+                    backgroundColor="rgba(0,0,0,0)"
+                    showAtmosphere
+                    atmosphereColor="#E3A857"
+                    atmosphereAltitude={0.18}
+                    globeImageUrl="/textures/earth-night.jpg"
+                    labelsData={[{ lat: 3.139, lng: 101.6869, text: 'KL', color: '#F4EDE2', size: 14 }]}
+                  />
+                </Suspense>
+              </InView>
+            </div>
+            <p className="text-sm leading-relaxed text-ink-muted">
+              Based in <span className="text-ink">Kuala Lumpur</span> — open to remote work worldwide and flexible
+              across time zones.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Narrative */}
+        <motion.div
+          className="flex flex-col justify-center lg:col-span-7"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={reveal}>
+          <p className="font-display text-2xl leading-snug text-ink sm:text-[2rem]">
+            “I build <span className="italic text-amber">intelligent automation</span> systems.”
+          </p>
+          <p className="mt-5 leading-relaxed text-ink-muted">{profile.summary}</p>
+
+          <div className="my-8 h-px w-full bg-edge" />
+
+          <dl className="grid grid-cols-2 gap-y-6 sm:grid-cols-3">
+            <Fact label="Based in" value="Kuala Lumpur 🇲🇾" />
+            <Fact label="Focus" value="RPA · Java Dev · Agentic AI" />
+            <Fact
+              label="Status"
+              value={
+                <span className="inline-flex items-center gap-2">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-sage" />
+                  Open to SE &amp; AI roles
+                </span>
+              }
+            />
+          </dl>
+
+          <div className="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <button
+              onClick={downloadResume}
+              className="rounded-xl bg-amber px-5 py-2.5 text-sm font-semibold text-bg transition-transform duration-200 hover:-translate-y-0.5">
+              Download Résumé
+            </button>
+            <a
+              href="#contact"
+              className="rounded-xl border border-edge px-5 py-2.5 text-sm font-semibold text-ink transition-colors duration-200 hover:border-amber/60 hover:text-amber">
+              Get in touch
+            </a>
+            <button
+              onClick={handleCopy}
+              className="text-sm text-ink-muted underline-offset-4 transition-colors hover:text-amber hover:underline">
+              {hasCopied ? 'Copied ✓' : profile.email}
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    </section>
   );
 };
 

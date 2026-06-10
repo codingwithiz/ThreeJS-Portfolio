@@ -4,74 +4,78 @@ import { OrbitControls } from '@react-three/drei';
 
 import Developer from '../components/Developer.jsx';
 import CanvasLoader from '../components/Loading.jsx';
-import { workExperiences } from '../constants/index.js';
+import SectionHeader from '../components/SectionHeader.jsx';
+import InView from '../components/InView.jsx';
+import { technicalExperience } from '../constants/index.js';
 
-const WorkExperience = () => {
+const TechnicalExperience = () => {
   const [animationName, setAnimationName] = useState('idle');
 
   return (
-    <section className="c-space my-20" id="experience">
-      <div className="w-full text-white-600">
-        <p className="head-text">My Work Experience</p>
+    <section id="experience" className="grain section-shell">
+      <SectionHeader
+        number="02"
+        label="Experience · Technical"
+        title={
+          <>
+            Where I&apos;ve <span className="font-display italic text-amber">shipped</span>.
+          </>
+        }
+      />
 
-        <div className="work-container">
-          <div className="work-canvas">
-            <Canvas>
-              <ambientLight intensity={7} />
-              <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-              <directionalLight position={[10, 10, 10]} intensity={1} />
-              <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2} />
+      <div className="mt-12 grid gap-5 lg:grid-cols-3">
+        {/* Animated avatar */}
+        <div className="card !p-0 h-[380px] overflow-hidden lg:h-auto lg:min-h-[480px]">
+          <InView
+            className="h-full w-full"
+            fallback={<div className="flex h-full items-center justify-center text-sm text-ink-muted/50">Loading 3D…</div>}>
+          <Canvas>
+            <ambientLight intensity={5} />
+            <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+            <directionalLight position={[10, 10, 10]} intensity={1} />
+            <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2} />
+            <Suspense fallback={<CanvasLoader />}>
+              <Developer position-y={-3} scale={3} animationName={animationName} />
+            </Suspense>
+          </Canvas>
+          </InView>
+        </div>
 
-              <Suspense fallback={<CanvasLoader />}>
-                <Developer position-y={-3} scale={3} animationName={animationName} />
-              </Suspense>
-            </Canvas>
-          </div>
-
-          <div className="work-content">
-            <div className="sm:py-10 py-5 sm:px-5 px-2.5">
-              {workExperiences.map((item, index) => (
-                <div
-                  key={index}
-                  onClick={() => setAnimationName(item.animation.toLowerCase())}
-                  onPointerOver={() => setAnimationName(item.animation.toLowerCase())}
-                  onPointerOut={() => setAnimationName('idle')}
-                  className="work-content_container group">
-                  <div className="flex flex-col h-full justify-start items-center py-2">
-                    <div className={`work-content_logo ${
-                      item.name === 'Maxis Berhad' || item.name === 'LTL Global Telecom' || item.name === 'Academind Network'
-                        ? 'bg-white rounded-lg p-2' : ''
-                    }`}>
-                      <img 
-                        className="w-full h-full object-contain" 
-                        src={item.icon} 
-                        alt={`${item.name} logo`}
-                        style={{
-                          maxWidth: '100%',
-                          maxHeight: '100%',
-                          objectFit: 'contain'
-                        }}
-                      />
-                    </div>
-
-                    <div className="work-content_bar" />
-                  </div>
-
-                  <div className="sm:p-5 px-2.5 py-5">
-                    <p className="font-bold text-white-800">{item.name}</p>
-                    <p className="text-sm mb-5">
-                      {item.pos} -- <span>{item.duration}</span>
-                    </p>
-                    <p className="group-hover:text-white transition-all ease-in-out duration-500">{item.title}</p>
-                  </div>
+        {/* Timeline */}
+        <div className="flex flex-col lg:col-span-2">
+          {technicalExperience.map((it, i) => (
+            <div
+              key={`${it.company}-${i}`}
+              onPointerOver={() => setAnimationName(it.animation)}
+              onPointerOut={() => setAnimationName('idle')}
+              onClick={() => setAnimationName(it.animation)}
+              className="group grid cursor-pointer grid-cols-[auto_1fr] gap-5 rounded-2xl p-4 transition-colors hover:bg-surface sm:p-5">
+              <div className="flex flex-col items-center">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl border border-edge bg-white/95 p-2">
+                  <img src={it.icon} alt={it.company} className="h-full w-full object-contain" />
                 </div>
-              ))}
+                {i < technicalExperience.length - 1 && <span className="mt-3 w-px flex-1 bg-edge" />}
+              </div>
+              <div className="pb-6">
+                <p className="font-display text-lg font-semibold text-ink">{it.role}</p>
+                <p className="text-sm text-ink-muted">
+                  {it.company} · {it.duration} · {it.location}
+                </p>
+                <ul className="mt-3 space-y-1.5">
+                  {it.points.map((p, idx) => (
+                    <li key={idx} className="flex gap-2 text-sm leading-relaxed text-ink-muted">
+                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-amber" />
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
 
-export default WorkExperience;
+export default TechnicalExperience;

@@ -1,27 +1,3 @@
-import { Analytics } from "@vercel/analytics/react"
-import Hero from './sections/Hero.jsx';
-import About from './sections/About.jsx';
-import Footer from './sections/Footer.jsx';
-import Navbar from './sections/Navbar.jsx';
-import Contact from './sections/Contact.jsx';
-import Clients from './sections/Clients.jsx';
-import Projects from './sections/Projects.jsx';
-import WorkExperience from './sections/Experience.jsx';
-
-const App = () => {
-  return (
-    <main className="max-w-7xl mx-auto relative">
-      <Navbar />
-      <Hero />
-      <About />
-      <WorkExperience />
-      <Projects />
-      <Clients />
-      <Contact />
-      <Footer />
-      <Analytics />
-    </main>
-  );
-};
-
-export default App;
+// Routing now lives in main.jsx (BrowserRouter). This thin alias keeps the
+// historical entry point valid; the home page composition is in pages/Home.jsx.
+export { default } from './pages/Home.jsx';
