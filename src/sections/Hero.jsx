@@ -1,6 +1,6 @@
-import { Suspense, useRef } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useMediaQuery } from 'react-responsive';
 import { motion } from 'framer-motion';
 
@@ -43,6 +43,17 @@ const AvatarRig = ({ isMobile, children }) => {
 
 const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 768 });
+  // Defer mounting the WebGL canvas until the browser is idle, so the hero copy
+  // (the LCP element) paints first instead of competing with three.js startup.
+  const [show3D, setShow3D] = useState(false);
+  useEffect(() => {
+    if (window.requestIdleCallback) {
+      const id = window.requestIdleCallback(() => setShow3D(true), { timeout: 1500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = setTimeout(() => setShow3D(true), 250);
+    return () => clearTimeout(id);
+  }, []);
 
   const downloadResume = () => {
     const link = document.createElement('a');
@@ -161,9 +172,10 @@ const Hero = () => {
         </motion.div>
 
         {/* RIGHT — 3D avatar */}
-        <div className="relative h-[44vh] min-h-[300px] w-full lg:h-screen">
+        <div className="touch-orbit relative h-[44vh] min-h-[300px] w-full lg:h-screen">
+          {show3D && (
           <Canvas>
-            <PerspectiveCamera makeDefault position={[0, 0, 6.5]} fov={42} />
+            <PerspectiveCamera makeDefault position={[0, 0, 6.5]} fov={isMobile ? 46 : 42} />
             <ambientLight intensity={0.55} />
             <directionalLight position={[4, 6, 6]} intensity={1.6} color="#ffe6c0" />
             <directionalLight position={[-6, 2, 2]} intensity={0.5} color="#cfe0c0" />
@@ -173,16 +185,26 @@ const Hero = () => {
                 <Developer animationName="idle" position={[0, -3, 0]} scale={2.6} />
               </AvatarRig>
             </Suspense>
+            {/* On touch devices a horizontal swipe spins the avatar a full 360°
+                while vertical swipes still scroll the page (see .touch-orbit). */}
+            {isMobile && (
+              <OrbitControls
+                makeDefault
+                enableZoom={false}
+                enablePan={false}
+                minPolarAngle={Math.PI / 2}
+                maxPolarAngle={Math.PI / 2}
+              />
+            )}
           </Canvas>
+          )}
 
           {/* Grounds the floating avatar by fading its base into the page */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-bg to-transparent" />
 
-          {!isMobile && (
-            <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 text-xs tracking-wide text-ink-muted/70">
-              move your mouse — I&apos;ll follow
-            </div>
-          )}
+          <div className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 text-xs tracking-wide text-ink-muted/70">
+            {isMobile ? 'swipe to spin me 360°' : "move your mouse — I'll follow"}
+          </div>
         </div>
       </div>
 

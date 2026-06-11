@@ -11,6 +11,7 @@ import './index.css';
 // Blog pages (and the markdown renderer) load only when visited
 const BlogIndex = lazy(() => import('./pages/BlogIndex.jsx'));
 const Post = lazy(() => import('./pages/Post.jsx'));
+const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 const PageFallback = () => (
   <div className="flex min-h-[60vh] items-center justify-center text-sm text-ink-muted/60">Loading…</div>
@@ -39,7 +40,14 @@ createRoot(document.getElementById('root')).render(
               </Suspense>
             }
           />
-          <Route path="*" element={<Home />} />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<PageFallback />}>
+                <NotFound />
+              </Suspense>
+            }
+          />
         </Route>
       </Routes>
       <Analytics />

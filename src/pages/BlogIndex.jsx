@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-import { posts, readingTime } from '../content/posts.js';
+import { readingTime } from '../content/posts.js';
+import { usePosts } from '../lib/useContent.js';
 
 const fmtDate = (d) => new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
@@ -11,6 +12,8 @@ const reveal = {
 };
 
 const BlogIndex = () => {
+  const posts = usePosts();
+
   return (
     <section className="grain section-shell min-h-[80vh] pt-32">
       <div className="flex items-center gap-3">
@@ -28,6 +31,13 @@ const BlogIndex = () => {
         {posts.map((p) => (
           <motion.div key={p.slug} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={reveal}>
             <Link to={`/blog/${p.slug}`} className="card group flex h-full flex-col">
+              {p.cover && (
+                <img
+                  src={p.cover}
+                  alt=""
+                  className="mb-4 aspect-video w-full rounded-xl border border-edge object-cover"
+                />
+              )}
               <div className="flex items-center gap-2 text-xs text-ink-muted">
                 <span>{fmtDate(p.date)}</span>
                 <span>·</span>

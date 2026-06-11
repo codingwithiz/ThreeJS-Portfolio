@@ -31,6 +31,13 @@ body {
   overflow-x: hidden;
 }
 
+/* 3D canvases on touch devices: let a vertical swipe scroll the page while a
+   horizontal swipe orbits the model. Overrides OrbitControls' inline
+   `touch-action: none`, which otherwise traps the page scroll on mobile. */
+.touch-orbit canvas {
+  touch-action: pan-y !important;
+}
+
 /* Reusable film-grain overlay — apply to a relatively-positioned section */
 .grain::after {
   content: '';
@@ -125,6 +132,67 @@ body {
   border: 0;
   border-top: 1px solid var(--edge);
   margin: 2rem 0;
+}
+
+/* Fenced code blocks — rehype-highlight adds .hljs + token classes */
+.prose-terra pre {
+  background: #100d0a;
+  border: 1px solid var(--edge);
+  border-radius: 0.7rem;
+  padding: 1.1rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+.prose-terra pre code {
+  background: transparent;
+  color: var(--ink);
+  padding: 0;
+  border-radius: 0;
+  font-size: inherit;
+}
+.prose-terra .hljs-comment,
+.prose-terra .hljs-quote {
+  color: #7c715f;
+  font-style: italic;
+}
+.prose-terra .hljs-keyword,
+.prose-terra .hljs-selector-tag,
+.prose-terra .hljs-built_in {
+  color: var(--amber);
+}
+.prose-terra .hljs-string,
+.prose-terra .hljs-attr,
+.prose-terra .hljs-template-string {
+  color: var(--sage);
+}
+.prose-terra .hljs-number,
+.prose-terra .hljs-literal {
+  color: #d08c5a;
+}
+.prose-terra .hljs-title,
+.prose-terra .hljs-title.function_,
+.prose-terra .hljs-section {
+  color: #e8c789;
+}
+.prose-terra .hljs-name,
+.prose-terra .hljs-type {
+  color: #cdb892;
+}
+.prose-terra .hljs-tag {
+  color: var(--ink-muted);
+}
+.prose-terra .hljs-deletion {
+  color: var(--clay);
+}
+.prose-terra .hljs-addition {
+  color: var(--sage);
+}
+.prose-terra .hljs-emphasis {
+  font-style: italic;
+}
+.prose-terra .hljs-strong {
+  font-weight: 700;
 }
 
 @layer utilities {

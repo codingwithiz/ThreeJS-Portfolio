@@ -1,6 +1,7 @@
 import { Suspense, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
+import { useMediaQuery } from 'react-responsive';
 
 import Developer from '../components/Developer.jsx';
 import CanvasLoader from '../components/Loading.jsx';
@@ -10,6 +11,7 @@ import { technicalExperience } from '../constants/index.js';
 
 const TechnicalExperience = () => {
   const [animationName, setAnimationName] = useState('idle');
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   return (
     <section id="experience" className="grain section-shell">
@@ -27,17 +29,20 @@ const TechnicalExperience = () => {
         {/* Animated avatar */}
         <div className="card !p-0 h-[380px] overflow-hidden lg:h-auto lg:min-h-[480px]">
           <InView
-            className="h-full w-full"
+            className="touch-orbit relative h-full w-full"
             fallback={<div className="flex h-full items-center justify-center text-sm text-ink-muted/50">Loading 3D…</div>}>
           <Canvas>
             <ambientLight intensity={5} />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
             <directionalLight position={[10, 10, 10]} intensity={1} />
-            <OrbitControls enableZoom={false} maxPolarAngle={Math.PI / 2} />
+            <OrbitControls makeDefault enablePan={false} enableZoom={false} maxPolarAngle={Math.PI / 2} />
             <Suspense fallback={<CanvasLoader />}>
-              <Developer position-y={-3} scale={3} animationName={animationName} />
+              <Developer position-y={-3} scale={isMobile ? 2.6 : 3} animationName={animationName} />
             </Suspense>
           </Canvas>
+          <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-bg/70 px-3 py-1 text-[.65rem] uppercase tracking-[.15em] text-ink-muted/80 backdrop-blur lg:hidden">
+            Drag to rotate
+          </span>
           </InView>
         </div>
 
