@@ -2,10 +2,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 import SectionHeader from '../components/SectionHeader.jsx';
-import { honors } from '../constants/index.js';
-
-const featured = honors.filter((h) => h.featured);
-const others = honors.filter((h) => !h.featured);
+import { useAwards } from '../lib/useContent.js';
 
 const reveal = {
   hidden: { opacity: 0, y: 28 },
@@ -47,6 +44,10 @@ const AwardImage = ({ image, title }) => {
 };
 
 const Awards = () => {
+  const awards = useAwards();
+  const featured = awards.filter((h) => h.featured);
+  const others = awards.filter((h) => !h.featured);
+
   return (
     <section id="awards" className="grain section-shell">
       <SectionHeader

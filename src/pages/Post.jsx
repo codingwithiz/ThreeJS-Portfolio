@@ -1,15 +1,27 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
 
-import { getPost, readingTime } from '../content/posts.js';
+import { readingTime } from '../content/posts.js';
+import { usePost, usePosts } from '../lib/useContent.js';
 
 const fmtDate = (d) => new Date(d).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
 const Post = () => {
   const { slug } = useParams();
-  const post = getPost(slug);
+  const { post, loading } = usePost(slug);
+  const allPosts = usePosts();
+
+  const { newer, older } = useMemo(() => {
+    const ordered = [...allPosts].sort((a, b) => new Date(b.date) - new Date(a.date));
+    const i = ordered.findIndex((p) => p.slug === slug);
+    return {
+      newer: i > 0 ? ordered[i - 1] : null,
+      older: i >= 0 && i < ordered.length - 1 ? ordered[i + 1] : null,
+    };
+  }, [allPosts, slug]);
 
   useEffect(() => {
     if (!post) return;
@@ -23,7 +35,16 @@ const Post = () => {
     };
   }, [post]);
 
-  if (!post) return <Navigate to="/blog" replace />;
+  if (!post) {
+    if (loading) {
+      return (
+        <section className="grain section-shell flex min-h-screen items-center justify-center pt-32">
+          <span className="text-sm text-ink-muted">Loading…</span>
+        </section>
+      );
+    }
+    return <Navigate to="/blog" replace />;
+  }
 
   return (
     <article className="grain section-shell min-h-screen pt-32">
@@ -47,11 +68,47 @@ const Post = () => {
         ))}
       </div>
 
+      {post.cover && (
+        <img
+          src={post.cover}
+          alt=""
+          className="mt-8 aspect-video w-full max-w-3xl rounded-2xl border border-edge object-cover"
+        />
+      )}
+
       <div className="prose-terra mt-10 max-w-3xl">
-        <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+        <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
+          {post.content}
+        </ReactMarkdown>
       </div>
 
-      <div className="mt-16 border-t border-edge pt-8">
+      {/* Keep reading */}
+      {(newer || older) && (
+        <nav className="mt-16 grid gap-4 border-t border-edge pt-8 sm:grid-cols-2">
+          {newer ? (
+            <Link to={`/blog/${newer.slug}`} className="card group">
+              <span className="text-xs uppercase tracking-[.15em] text-ink-muted/70">← Newer</span>
+              <p className="mt-2 font-display text-lg font-semibold text-ink transition-colors group-hover:text-amber">
+                {newer.title}
+              </p>
+            </Link>
+          ) : (
+            <span />
+          )}
+          {older ? (
+            <Link to={`/blog/${older.slug}`} className="card group sm:text-right">
+              <span className="text-xs uppercase tracking-[.15em] text-ink-muted/70">Older →</span>
+              <p className="mt-2 font-display text-lg font-semibold text-ink transition-colors group-hover:text-amber">
+                {older.title}
+              </p>
+            </Link>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )}
+
+      <div className="mt-10">
         <Link to="/blog" className="text-sm font-medium text-amber">
           ← Back to all writing
         </Link>

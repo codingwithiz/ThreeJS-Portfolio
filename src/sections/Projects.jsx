@@ -1,15 +1,14 @@
 import { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls } from '@react-three/drei';
+import { useMediaQuery } from 'react-responsive';
 
-import { myProjects } from '../constants/index.js';
+import { useProjects } from '../lib/useContent.js';
 import CanvasLoader from '../components/Loading.jsx';
 import DemoComputer from '../components/DemoComputer.jsx';
 import SectionHeader from '../components/SectionHeader.jsx';
 import InView from '../components/InView.jsx';
 
-const projects = [...myProjects].sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
-const allTags = Array.from(new Set(projects.flatMap((p) => p.tags.map((t) => t.name))));
 const shortTitle = (t) => t.split(' - ')[0].split(' — ')[0];
 const monogram = (t) => shortTitle(t).replace(/[^A-Za-z0-9]/g, '').slice(0, 2).toUpperCase();
 const PAGE_SIZE = 6;
@@ -17,14 +16,16 @@ const PAGE_SIZE = 6;
 // Plays the demo clip on hover; shows a still first frame otherwise (light on mobile)
 const VideoThumb = ({ src }) => {
   const ref = useRef();
+  const poster = src.replace(/\.mp4$/, '.jpg');
   return (
     <video
       ref={ref}
       src={src}
+      poster={poster}
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="none"
       onMouseEnter={() => ref.current?.play()}
       onMouseLeave={() => {
         if (ref.current) ref.current.pause();
@@ -35,14 +36,21 @@ const VideoThumb = ({ src }) => {
 };
 
 const Projects = () => {
+  const projects = useProjects();
   const [selected, setSelected] = useState(0);
   const [filter, setFilter] = useState('All');
   const [visible, setVisible] = useState(PAGE_SIZE);
-  const current = projects[selected];
+  const isMobile = useMediaQuery({ maxWidth: 768 });
+  const current = projects[selected] ?? projects[0];
+
+  const allTags = useMemo(
+    () => Array.from(new Set(projects.flatMap((p) => p.tags.map((t) => t.name)))),
+    [projects],
+  );
 
   const filtered = useMemo(
     () => (filter === 'All' ? projects : projects.filter((p) => p.tags.some((t) => t.name === filter))),
-    [filter],
+    [filter, projects],
   );
 
   const navigate = (dir) =>
@@ -141,20 +149,23 @@ const Projects = () => {
         <div className="card !p-0 h-[340px] overflow-hidden lg:h-auto">
           {current.texture ? (
             <InView
-              className="h-full w-full"
+              className="touch-orbit relative h-full w-full"
               fallback={<div className="flex h-full items-center justify-center text-sm text-ink-muted/50">Loading 3D…</div>}>
               <Canvas>
                 <ambientLight intensity={Math.PI} />
                 <directionalLight position={[10, 10, 5]} />
                 <Center>
                   <Suspense fallback={<CanvasLoader />}>
-                    <group scale={2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
-                      <DemoComputer texture={current.texture} />
+                    <group scale={isMobile ? 1.6 : 2} position={[0, -3, 0]} rotation={[0, -0.1, 0]}>
+                      <DemoComputer key={current.texture} texture={current.texture} />
                     </group>
                   </Suspense>
                 </Center>
-                <OrbitControls maxPolarAngle={Math.PI / 2} enableZoom={false} />
+                <OrbitControls makeDefault enablePan={false} enableZoom={false} maxPolarAngle={Math.PI / 2} />
               </Canvas>
+              <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-bg/70 px-3 py-1 text-[.65rem] uppercase tracking-[.15em] text-ink-muted/80 backdrop-blur lg:hidden">
+                Drag to rotate
+              </span>
             </InView>
           ) : (
             <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-surface-light to-bg p-8 text-center">
