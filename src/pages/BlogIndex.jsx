@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 import { readingTime } from '../content/posts.js';
 import { usePosts } from '../lib/useContent.js';
@@ -54,7 +55,9 @@ const BlogIndex = () => {
                   </span>
                 ))}
               </div>
-              <span className="mt-auto pt-6 text-sm font-medium text-amber">Read →</span>
+              <span className="mt-auto inline-flex items-center gap-1 pt-6 text-sm font-medium text-amber">
+                Read <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              </span>
             </Link>
           </motion.div>
         ))}

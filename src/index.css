@@ -29,6 +29,24 @@ body {
   color: var(--ink);
   font-family: 'General Sans', sans-serif;
   overflow-x: hidden;
+  /* Let Fraunces' optical-size (opsz) axis track font-size: dramatic, high-contrast
+     serifs at display sizes; calmer letterforms at body sizes. */
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typographic polish: balance multi-line headings, avoid orphans in body copy. */
+h1,
+h2,
+h3,
+.section-title {
+  text-wrap: balance;
+}
+.prose-terra p,
+.prose-terra li {
+  text-wrap: pretty;
 }
 
 /* 3D canvases on touch devices: let a vertical swipe scroll the page while a
@@ -63,7 +81,7 @@ body {
     @apply font-display text-3xl font-semibold text-ink sm:text-4xl lg:text-5xl;
   }
   .card {
-    @apply rounded-2xl border border-edge bg-surface p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-amber/30;
+    @apply rounded-2xl border border-edge bg-surface p-6 transition-all duration-300 ease-[cubic-bezier(0.34,1.4,0.64,1)] hover:-translate-y-1 hover:border-amber/30 hover:shadow-[0_18px_44px_-16px_rgba(0,0,0,0.55)];
   }
   .chip {
     @apply inline-flex items-center gap-2 rounded-full border border-edge bg-surface-light px-3 py-1.5 text-sm text-ink-muted;

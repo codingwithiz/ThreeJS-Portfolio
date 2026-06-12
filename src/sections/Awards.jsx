@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Trophy } from 'lucide-react';
 
 import SectionHeader from '../components/SectionHeader.jsx';
 import { useAwards } from '../lib/useContent.js';
@@ -8,13 +9,6 @@ const reveal = {
   hidden: { opacity: 0, y: 28 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
-
-const Trophy = () => (
-  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z" />
-    <path d="M17 5h3v1a3 3 0 0 1-3 3M7 5H4v1a3 3 0 0 0 3 3" />
-  </svg>
-);
 
 const AwardImage = ({ image, title }) => {
   const [ok, setOk] = useState(false);
@@ -25,7 +19,7 @@ const AwardImage = ({ image, title }) => {
           ok ? 'opacity-0' : 'opacity-100'
         }`}>
         <span className="text-amber/60">
-          <Trophy />
+          <Trophy className="h-9 w-9" strokeWidth={1.5} />
         </span>
         <span className="text-xs tracking-wide text-ink-muted/60">winning photo coming soon</span>
       </div>
@@ -76,8 +70,8 @@ const Awards = () => {
             <div className={i % 2 === 1 ? 'lg:order-1' : ''}>
               <div className="flex flex-wrap items-center gap-3">
                 {a.prize && (
-                  <span className="rounded-full border border-amber/40 bg-amber/10 px-3 py-1 text-xs font-semibold text-amber">
-                    🏆 {a.prize}
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-amber/40 bg-amber/10 px-3 py-1 text-xs font-semibold text-amber">
+                    <Trophy className="h-3.5 w-3.5" /> {a.prize}
                   </span>
                 )}
                 <span className="text-xs uppercase tracking-[.2em] text-ink-muted/70">{a.date}</span>
