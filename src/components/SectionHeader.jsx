@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const reveal = {
   hidden: { opacity: 0, y: 24 },
@@ -9,20 +10,28 @@ const reveal = {
  * Editorial section header: an oversized ghost numeral, an amber hairline label,
  * and a large display title. The connective tissue that gives every section identity.
  */
-const SectionHeader = ({ number, label, title, intro, align = 'left' }) => (
+const SectionHeader = ({ number, label, title, intro, align = 'left' }) => {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  // Giant ghost numeral drifts upward as the section scrolls past — quiet depth.
+  const numeralY = useTransform(scrollYProgress, [0, 1], [50, -50]);
+
+  return (
   <motion.div
+    ref={ref}
     initial="hidden"
     whileInView="show"
     viewport={{ once: true, amount: 0.4 }}
     variants={reveal}
     className={`relative ${align === 'center' ? 'text-center' : ''}`}>
-    <span
+    <motion.span
       aria-hidden="true"
+      style={{ y: numeralY }}
       className={`pointer-events-none absolute -top-10 select-none font-display text-[6rem] font-black leading-none text-ink/[0.05] sm:text-[9rem] lg:text-[12rem] ${
         align === 'center' ? 'left-1/2 -translate-x-1/2' : 'right-0'
       }`}>
       {number}
-    </span>
+    </motion.span>
     <div className={`relative flex items-center gap-3 ${align === 'center' ? 'justify-center' : ''}`}>
       <span className="h-px w-10 bg-amber" />
       <span className="text-xs uppercase tracking-[.3em] text-amber">{label}</span>
@@ -30,6 +39,7 @@ const SectionHeader = ({ number, label, title, intro, align = 'left' }) => (
     <h2 className={`section-title relative mt-4 max-w-2xl ${align === 'center' ? 'mx-auto' : ''}`}>{title}</h2>
     {intro && <p className={`relative mt-4 max-w-xl text-ink-muted ${align === 'center' ? 'mx-auto' : ''}`}>{intro}</p>}
   </motion.div>
-);
+  );
+};
 
 export default SectionHeader;

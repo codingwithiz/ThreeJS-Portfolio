@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { useMediaQuery } from 'react-responsive';
 import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 import CanvasLoader from '../components/Loading.jsx';
 import Developer from '../components/Developer.jsx';
@@ -23,6 +24,12 @@ const container = {
 const item = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+};
+
+// Signature moment: the name wipes in left-to-right via an animated clip-path.
+const nameReveal = {
+  hidden: { opacity: 0, clipPath: 'inset(0 100% 0 0)' },
+  show: { opacity: 1, clipPath: 'inset(0 0% 0 0)', transition: { duration: 1.05, ease: [0.22, 1, 0.36, 1] } },
 };
 
 // Gives the 3D avatar a gentle idle float and a subtle lean toward the cursor
@@ -99,7 +106,7 @@ const Hero = () => {
           </motion.p>
 
           <motion.h1
-            variants={item}
+            variants={nameReveal}
             className="font-display font-black leading-[.92] tracking-tight text-ink"
             style={{ fontSize: 'clamp(3rem,11vw,7rem)' }}>
             Ing Zhen<span className="text-amber">.</span>
@@ -149,8 +156,8 @@ const Hero = () => {
             </button>
             <a
               href="#contact"
-              className="text-sm text-ink-muted underline-offset-4 transition-colors hover:text-ink hover:underline">
-              or say hello →
+              className="inline-flex items-center gap-1.5 text-sm text-ink-muted underline-offset-4 transition-colors hover:text-ink hover:underline">
+              or say hello <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
             </a>
           </motion.div>
 

@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { readingTime } from '../content/posts.js';
 import { usePost, usePosts } from '../lib/useContent.js';
@@ -48,8 +49,8 @@ const Post = () => {
 
   return (
     <article className="grain section-shell min-h-screen pt-32">
-      <Link to="/blog" className="text-sm text-ink-muted underline-offset-4 transition-colors hover:text-amber hover:underline">
-        ← All writing
+      <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-ink-muted underline-offset-4 transition-colors hover:text-amber hover:underline">
+        <ArrowLeft className="h-4 w-4" /> All writing
       </Link>
 
       <div className="mt-8 flex items-center gap-2 text-xs uppercase tracking-[.15em] text-ink-muted">
@@ -87,7 +88,9 @@ const Post = () => {
         <nav className="mt-16 grid gap-4 border-t border-edge pt-8 sm:grid-cols-2">
           {newer ? (
             <Link to={`/blog/${newer.slug}`} className="card group">
-              <span className="text-xs uppercase tracking-[.15em] text-ink-muted/70">← Newer</span>
+              <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[.15em] text-ink-muted/70">
+                <ArrowLeft className="h-3.5 w-3.5" /> Newer
+              </span>
               <p className="mt-2 font-display text-lg font-semibold text-ink transition-colors group-hover:text-amber">
                 {newer.title}
               </p>
@@ -97,7 +100,9 @@ const Post = () => {
           )}
           {older ? (
             <Link to={`/blog/${older.slug}`} className="card group sm:text-right">
-              <span className="text-xs uppercase tracking-[.15em] text-ink-muted/70">Older →</span>
+              <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[.15em] text-ink-muted/70">
+                Older <ArrowRight className="h-3.5 w-3.5" />
+              </span>
               <p className="mt-2 font-display text-lg font-semibold text-ink transition-colors group-hover:text-amber">
                 {older.title}
               </p>
@@ -109,8 +114,8 @@ const Post = () => {
       )}
 
       <div className="mt-10">
-        <Link to="/blog" className="text-sm font-medium text-amber">
-          ← Back to all writing
+        <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm font-medium text-amber">
+          <ArrowLeft className="h-4 w-4" /> Back to all writing
         </Link>
       </div>
     </article>

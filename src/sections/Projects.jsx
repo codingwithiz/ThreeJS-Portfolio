@@ -2,6 +2,7 @@ import { Suspense, useMemo, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Center, OrbitControls } from '@react-three/drei';
 import { useMediaQuery } from 'react-responsive';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Trophy } from 'lucide-react';
 
 import { useProjects } from '../lib/useContent.js';
 import CanvasLoader from '../components/Loading.jsx';
@@ -96,8 +97,8 @@ const Projects = () => {
               </div>
             )}
             {current.award && (
-              <span className="rounded-full border border-amber/40 bg-amber/10 px-3 py-1 text-xs font-semibold text-amber">
-                🏆 {current.award}
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber/40 bg-amber/10 px-3 py-1 text-xs font-semibold text-amber">
+                <Trophy className="h-3.5 w-3.5" /> {current.award}
               </span>
             )}
           </div>
@@ -121,8 +122,8 @@ const Projects = () => {
                 href={current.demo}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-xl bg-amber px-5 py-2.5 text-sm font-semibold text-bg transition-transform hover:-translate-y-0.5">
-                Live demo ↗
+                className="inline-flex items-center gap-1.5 rounded-xl bg-amber px-5 py-2.5 text-sm font-semibold text-bg transition-transform hover:-translate-y-0.5">
+                Live demo <ArrowUpRight className="h-4 w-4" />
               </a>
             )}
             {current.github && (
@@ -130,16 +131,16 @@ const Projects = () => {
                 href={current.github}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-xl border border-edge px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-amber/60 hover:text-amber">
-                View code ↗
+                className="inline-flex items-center gap-1.5 rounded-xl border border-edge px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-amber/60 hover:text-amber">
+                View code <ArrowUpRight className="h-4 w-4" />
               </a>
             )}
             <div className="ml-auto flex gap-2">
               <button onClick={() => navigate('prev')} aria-label="Previous project" className="flex h-10 w-10 items-center justify-center rounded-full border border-edge text-ink-muted transition-colors hover:border-amber/60 hover:text-amber">
-                ←
+                <ArrowLeft className="h-4 w-4" />
               </button>
               <button onClick={() => navigate('next')} aria-label="Next project" className="flex h-10 w-10 items-center justify-center rounded-full border border-edge text-ink-muted transition-colors hover:border-amber/60 hover:text-amber">
-                →
+                <ArrowRight className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -223,8 +224,8 @@ const Projects = () => {
                   </div>
                 )}
                 {p.award && (
-                  <span className="absolute left-3 top-3 rounded-full bg-bg/80 px-2.5 py-1 text-xs font-semibold text-amber backdrop-blur">
-                    🏆 {p.award}
+                  <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-bg/80 px-2.5 py-1 text-xs font-semibold text-amber backdrop-blur">
+                    <Trophy className="h-3.5 w-3.5" /> {p.award}
                   </span>
                 )}
               </div>

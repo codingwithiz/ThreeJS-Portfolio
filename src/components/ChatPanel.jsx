@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUp } from 'lucide-react';
 
 const SUGGESTIONS = [
   'What does Ing Zhen do at Maxis?',
@@ -157,7 +158,7 @@ const ChatPanel = ({ isOpen, onClose }) => {
               disabled={loading}
               aria-label="Send message"
               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber text-bg transition-opacity disabled:opacity-50">
-              →
+              <ArrowUp className="h-4 w-4" strokeWidth={2.5} />
             </button>
           </form>
         </motion.div>

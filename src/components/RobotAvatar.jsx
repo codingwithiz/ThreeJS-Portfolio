@@ -111,7 +111,7 @@ const RobotAvatar = () => {
         <div className="absolute inset-0 rounded-full bg-amber/5 animate-pulse" />
         
         {/* Larger Robot container */}
-        <div className={`relative w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-md rounded-full border-2 border-amber/30 overflow-hidden transform transition-transform duration-200 ${
+        <div className={`relative w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-gray-900/90 to-black/90 backdrop-blur-md rounded-full border-2 border-amber/30 overflow-hidden transform transition-transform duration-200 ${
           isHovered ? 'scale-105 border-amber/50' : 'scale-100'
         } ${isDragging ? 'border-amber/50 shadow-lg' : ''}`}>
           {/* Canvas for 3D Robot - Optimized and Properly Centered */}

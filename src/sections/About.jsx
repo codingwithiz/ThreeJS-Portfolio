@@ -1,5 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
+import { Check, MapPin } from 'lucide-react';
 
 import SectionHeader from '../components/SectionHeader.jsx';
 import InView from '../components/InView.jsx';
@@ -111,7 +112,14 @@ const About = () => {
           <div className="my-8 h-px w-full bg-edge" />
 
           <dl className="grid grid-cols-2 gap-y-6 sm:grid-cols-3">
-            <Fact label="Based in" value="Kuala Lumpur 🇲🇾" />
+            <Fact
+              label="Based in"
+              value={
+                <span className="inline-flex items-center gap-1.5">
+                  <MapPin className="h-3.5 w-3.5 text-amber" /> Kuala Lumpur
+                </span>
+              }
+            />
             <Fact label="Focus" value="RPA · Java Dev · Agentic AI" />
             <Fact
               label="Status"
@@ -138,7 +146,13 @@ const About = () => {
             <button
               onClick={handleCopy}
               className="text-sm text-ink-muted underline-offset-4 transition-colors hover:text-amber hover:underline">
-              {hasCopied ? 'Copied ✓' : profile.email}
+              {hasCopied ? (
+                <span className="inline-flex items-center gap-1.5">
+                  <Check className="h-4 w-4" /> Copied
+                </span>
+              ) : (
+                profile.email
+              )}
             </button>
           </div>
         </motion.div>
