@@ -107,7 +107,7 @@ const Hero = () => {
 
           <motion.h1
             variants={nameReveal}
-            className="font-display font-black leading-[.92] tracking-tight text-ink"
+            className="font-display font-black leading-[.92] tracking-tight text-ink pb-[0.18em]"
             style={{ fontSize: 'clamp(3rem,11vw,7rem)' }}>
             Ing Zhen<span className="text-amber">.</span>
           </motion.h1>
