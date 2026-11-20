@@ -1,12 +1,12 @@
 {
-  "name": "Ing Zhen Lee — Software Engineer (AI & RPA)",
+  "name": "Ing Zhen Lee — Software Engineer (AI & Automation)",
   "short_name": "Ing Zhen Lee",
-  "description": "Software Engineer (AI & RPA) at Maxis. I build intelligent automation systems.",
+  "description": "Software Engineer (AI & Automation) at Maxis. I build intelligent automation systems.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#14110E",
-  "theme_color": "#14110E",
+  "background_color": "#2338C4",
+  "theme_color": "#2338C4",
   "icons": [
     { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },

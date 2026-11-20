@@ -1,32 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, X } from 'lucide-react';
 
 const SUGGESTIONS = [
   'What does Ing Zhen do at Maxis?',
-  'Tell me about his awards',
-  'What tech does he use?',
-  'How can I reach him?',
+  'How does IZ Finance log payments?',
+  'What is Crux?',
+  'How do I get in touch?',
 ];
 
 const GREETING = {
   role: 'assistant',
-  content: "Hi! I'm Ing Zhen's AI assistant 👋 Ask me anything about his work, projects, awards or experience.",
+  content: 'Ask about Ing Zhen’s work, systems, awards or experience. I answer from the same data this site is built from.',
 };
 
-const TypingDots = () => (
-  <span className="inline-flex items-center gap-1 py-1">
-    {[0, 1, 2].map((i) => (
-      <span
-        key={i}
-        className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-muted"
-        style={{ animationDelay: `${i * 0.15}s` }}
-      />
-    ))}
-  </span>
-);
-
-const ChatPanel = ({ isOpen, onClose }) => {
+// Mounted only while open (see Layout.jsx), so mount = open and unmount = close.
+const ChatPanel = ({ onClose }) => {
   const [messages, setMessages] = useState([GREETING]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,12 +22,15 @@ const ChatPanel = ({ isOpen, onClose }) => {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [messages]);
 
   useEffect(() => {
-    if (isOpen) setTimeout(() => inputRef.current?.focus(), 250);
-  }, [isOpen]);
+    inputRef.current?.focus();
+    const onKey = (e) => e.key === 'Escape' && onClose();
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [onClose]);
 
   const send = async (text) => {
     const content = (text ?? input).trim();
@@ -63,7 +54,6 @@ const ChatPanel = ({ isOpen, onClose }) => {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let acc = '';
-      // eslint-disable-next-line no-constant-condition
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -79,7 +69,7 @@ const ChatPanel = ({ isOpen, onClose }) => {
         const copy = [...m];
         copy[copy.length - 1] = {
           role: 'assistant',
-          content: "Sorry, I couldn't reach my brain just now. Try again, or email ingzhen2003@gmail.com.",
+          content: 'That did not go through. Try again, or email ingzhen2003@gmail.com.',
         };
         return copy;
       });
@@ -89,81 +79,69 @@ const ChatPanel = ({ isOpen, onClose }) => {
   };
 
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: 20, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.96 }}
-          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed bottom-24 right-4 z-40 flex h-[28rem] w-[min(92vw,22rem)] flex-col overflow-hidden rounded-2xl border border-edge bg-surface/95 shadow-2xl shadow-black/40 backdrop-blur-md sm:bottom-28 sm:right-8">
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-edge px-4 py-3">
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-amber/15 text-sm">🤖</span>
-              <div>
-                <p className="text-sm font-semibold leading-none text-ink">Ask about Ing Zhen</p>
-                <p className="mt-1 text-[.7rem] text-ink-muted">AI assistant · live</p>
-              </div>
-            </div>
-            <button onClick={onClose} aria-label="Close chat" className="text-ink-muted transition-colors hover:text-ink">
-              ✕
-            </button>
+    <div
+      role="dialog"
+      aria-label="Ask about Ing Zhen"
+      className="page-fade fixed inset-x-0 bottom-0 z-50 flex h-[100dvh] flex-col border-ink bg-night sm:inset-x-auto sm:bottom-4 sm:right-4 sm:h-[32rem] sm:max-h-[calc(100dvh-2rem)] sm:w-[24rem] sm:rounded-[14px] sm:border-2 sm:shadow-[5px_5px_0_#14110f]">
+      <div className="flex items-center justify-between border-b border-ink/15 pl-4">
+        <p className="label">The joker · ask me anything</p>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close chat"
+          className="flex h-11 w-11 items-center justify-center text-ink-muted hover:text-ink">
+          <X className="h-5 w-5" aria-hidden="true" />
+        </button>
+      </div>
+
+      <div ref={scrollRef} aria-live="polite" className="flex-1 space-y-4 overflow-y-auto px-4 py-4">
+        {messages.map((m, i) => (
+          <div key={i}>
+            <p className="label mb-1">{m.role === 'user' ? 'You' : 'Assistant'}</p>
+            <p className={`whitespace-pre-wrap text-sm leading-relaxed ${m.role === 'user' ? 'text-ink' : 'text-ink-muted'}`}>
+              {m.content || '…'}
+            </p>
           </div>
+        ))}
+      </div>
 
-          {/* Messages */}
-          <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
-            {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div
-                  className={`max-w-[85%] rounded-2xl px-3.5 py-2 text-sm leading-relaxed ${
-                    m.role === 'user' ? 'bg-amber text-bg' : 'bg-surface-light text-ink'
-                  }`}>
-                  {m.content || <TypingDots />}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Suggestions */}
-          {messages.length <= 1 && (
-            <div className="flex flex-wrap gap-2 px-4 pb-2">
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => send(s)}
-                  className="rounded-full border border-edge px-2.5 py-1 text-xs text-ink-muted transition-colors hover:border-amber/50 hover:text-amber">
-                  {s}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Input */}
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              send();
-            }}
-            className="flex items-center gap-2 border-t border-edge p-3">
-            <input
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask me anything…"
-              className="flex-1 rounded-xl border border-edge bg-bg px-3 py-2 text-sm text-ink placeholder:text-ink-muted/50 focus:border-amber/60 focus:outline-none"
-            />
+      {messages.length <= 1 && (
+        <div className="flex flex-col items-start px-4 pb-2">
+          {SUGGESTIONS.map((s) => (
             <button
-              type="submit"
-              disabled={loading}
-              aria-label="Send message"
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber text-bg transition-opacity disabled:opacity-50">
-              <ArrowUp className="h-4 w-4" strokeWidth={2.5} />
+              key={s}
+              type="button"
+              onClick={() => send(s)}
+              className="min-h-11 text-left text-sm text-amber underline decoration-amber/40 underline-offset-4 hover:decoration-amber">
+              {s}
             </button>
-          </form>
-        </motion.div>
+          ))}
+        </div>
       )}
-    </AnimatePresence>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          send();
+        }}
+        className="flex items-center gap-2 border-t border-ink/15 p-3">
+        <input
+          ref={inputRef}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          aria-label="Your question"
+          placeholder="Ask a question"
+          className="min-h-11 min-w-0 flex-1 rounded-sm border border-ink/40 bg-night px-3 text-base text-ink placeholder:text-ink-muted/60 focus:border-amber focus:outline-none sm:text-sm"
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          aria-label="Send"
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-sm bg-amber text-bg disabled:opacity-50">
+          <ArrowUp className="h-4 w-4" strokeWidth={2.5} aria-hidden="true" />
+        </button>
+      </form>
+    </div>
   );
 };
 

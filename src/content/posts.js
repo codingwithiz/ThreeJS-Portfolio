@@ -9,7 +9,7 @@ export const posts = [
     excerpt:
       'Going from "what is a GNN?" to a global runner-up at UrbanFloodBench — the strategy, the model, and what I would tell my past self.',
     tags: ['Machine Learning', 'Kaggle', 'GNN'],
-    content: `Two months before the UrbanFloodBench deadline, I had never trained a graph neural network. By the end, our team **SGD Lai Lai** sat 2nd globally out of 250+ teams from 20+ countries — losing first place on the private leaderboard by **0.0003**.
+    content: `Two months before the UrbanFloodBench deadline, I had never trained a graph neural network. By the end, our team **SGD Lai Lai** finished 2nd of 264 teams, with a private-leaderboard score of **0.0157** against first place's **0.0120**.
 
 Here's how that happened, and what actually moved the needle.
 
@@ -37,12 +37,12 @@ The biggest lesson wasn't technical. It was that *rapid, deliberate upskilling* 
     date: '2026-05-20',
     excerpt:
       'Three layers I lean on at Maxis to turn manual, brittle processes into systems that run themselves — and where each one earns its keep.',
-    tags: ['Automation', 'RPA', 'Agentic AI'],
+    tags: ['Automation', 'UiPath', 'Agentic AI'],
     content: `Enterprise automation isn't one tool — it's a stack. At Maxis I work across three layers, and each solves a different shape of problem.
 
 ## 1. UiPath — the hands
 
-RPA is how you automate the *boring, deterministic* surface area: moving data between systems that were never meant to talk, clicking through legacy UIs, reconciling reports. It's unglamorous and enormously valuable. The trick is knowing when **not** to use it — if there's an API, use the API.
+UiPath is how you automate the *boring, deterministic* surface area: moving data between systems that were never meant to talk, clicking through legacy UIs, reconciling reports. It's unglamorous and enormously valuable. The trick is knowing when **not** to use it — if there's an API, use the API.
 
 ## 2. Java + OSGi — the backbone
 
@@ -50,15 +50,15 @@ When a process needs to be reliable, modular and long-lived, it belongs in real 
 
 ## 3. Agentic AI — the judgement
 
-The newest layer. Where RPA follows a fixed script, an **agent** can reason over enterprise data, decide what to do next, and call tools to do it. The hard part isn't the model — it's the guardrails: scoping what the agent can touch, grounding it in trustworthy data, and keeping a human in the loop where it matters.
+The newest layer. Where a bot follows a fixed script, an **agent** can reason over enterprise data, decide what to do next, and call tools to do it. The hard part isn't the model — it's the guardrails: scoping what the agent can touch, grounding it in trustworthy data, and keeping a human in the loop where it matters.
 
 ## The mental model
 
-> RPA for the hands, services for the backbone, agents for the judgement.
+> Bots for the hands, services for the backbone, agents for the judgement.
 
 Most "AI transformation" fails because teams reach for the flashiest layer first. Start with the boring wins, build a solid backbone, and let the agents handle the parts that genuinely need to think.`,
   },
-];
+].sort((a, b) => b.date.localeCompare(a.date));   // newest first, as Sanity returns them, so nothing reorders when it loads
 
 export const getPost = (slug) => posts.find((p) => p.slug === slug);
 

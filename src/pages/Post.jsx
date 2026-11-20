@@ -31,7 +31,7 @@ const Post = () => {
     const prev = meta?.getAttribute('content');
     meta?.setAttribute('content', post.excerpt);
     return () => {
-      document.title = 'Ing Zhen Lee — Software Engineer (AI & RPA)';
+      document.title = 'Ing Zhen Lee — Software Engineer (AI & Automation)';
       if (meta && prev) meta.setAttribute('content', prev);
     };
   }, [post]);
@@ -39,7 +39,7 @@ const Post = () => {
   if (!post) {
     if (loading) {
       return (
-        <section className="grain section-shell flex min-h-screen items-center justify-center pt-32">
+        <section className="section-shell flex min-h-screen items-center justify-center">
           <span className="text-sm text-ink-muted">Loading…</span>
         </section>
       );
@@ -48,32 +48,26 @@ const Post = () => {
   }
 
   return (
-    <article className="grain section-shell min-h-screen pt-32">
-      <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm text-ink-muted underline-offset-4 transition-colors hover:text-amber hover:underline">
+    <article className="section-shell min-h-screen">
+      <Link to="/blog" className="label inline-flex min-h-11 items-center gap-1.5 hover:text-amber">
         <ArrowLeft className="h-4 w-4" /> All writing
       </Link>
 
-      <div className="mt-8 flex items-center gap-2 text-xs uppercase tracking-[.15em] text-ink-muted">
+      <div className="label mt-6 flex items-center gap-2">
         <span>{fmtDate(post.date)}</span>
         <span>·</span>
         <span>{readingTime(post.content)} min read</span>
       </div>
-      <h1 className="mt-3 max-w-3xl font-display text-3xl font-semibold leading-tight text-ink sm:text-5xl">
+      <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl">
         {post.title}
       </h1>
-      <div className="mt-5 flex flex-wrap gap-2">
-        {post.tags.map((t) => (
-          <span key={t} className="rounded-full border border-edge px-2.5 py-1 text-xs text-ink-muted">
-            {t}
-          </span>
-        ))}
-      </div>
+      <p className="label mt-5">{post.tags.join(' · ')}</p>
 
       {post.cover && (
         <img
           src={post.cover}
           alt=""
-          className="mt-8 aspect-video w-full max-w-3xl rounded-2xl border border-edge object-cover"
+          className="mt-8 aspect-video w-full max-w-3xl rounded-sm border border-edge object-cover"
         />
       )}
 
@@ -85,13 +79,13 @@ const Post = () => {
 
       {/* Keep reading */}
       {(newer || older) && (
-        <nav className="mt-16 grid gap-4 border-t border-edge pt-8 sm:grid-cols-2">
+        <nav className="mt-16 grid border-t border-edge sm:grid-cols-2">
           {newer ? (
-            <Link to={`/blog/${newer.slug}`} className="card group">
-              <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[.15em] text-ink-muted/70">
+            <Link to={`/blog/${newer.slug}`} className="group border-b border-edge py-5 sm:border-b-0 sm:border-r sm:pr-6">
+              <span className="label inline-flex items-center gap-1.5">
                 <ArrowLeft className="h-3.5 w-3.5" /> Newer
               </span>
-              <p className="mt-2 font-display text-lg font-semibold text-ink transition-colors group-hover:text-amber">
+              <p className="mt-2 font-display text-lg font-bold text-ink group-hover:text-amber">
                 {newer.title}
               </p>
             </Link>
@@ -99,11 +93,11 @@ const Post = () => {
             <span />
           )}
           {older ? (
-            <Link to={`/blog/${older.slug}`} className="card group sm:text-right">
-              <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[.15em] text-ink-muted/70">
+            <Link to={`/blog/${older.slug}`} className="group py-5 sm:pl-6 sm:text-right">
+              <span className="label inline-flex items-center gap-1.5">
                 Older <ArrowRight className="h-3.5 w-3.5" />
               </span>
-              <p className="mt-2 font-display text-lg font-semibold text-ink transition-colors group-hover:text-amber">
+              <p className="mt-2 font-display text-lg font-bold text-ink group-hover:text-amber">
                 {older.title}
               </p>
             </Link>
@@ -114,7 +108,7 @@ const Post = () => {
       )}
 
       <div className="mt-10">
-        <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm font-medium text-amber">
+        <Link to="/blog" className="link">
           <ArrowLeft className="h-4 w-4" /> Back to all writing
         </Link>
       </div>

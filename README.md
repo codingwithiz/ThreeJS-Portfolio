@@ -2,7 +2,7 @@
 
 # Ing Zhen Lee — Portfolio
 
-**Software Engineer (AI &amp; RPA)** · a warm, editorial 3D portfolio with a real AI assistant, a no‑code CMS, and a prerendered, shareable blog.
+**Software Engineer (AI &amp; Automation)** · a warm, editorial 3D portfolio with a real AI assistant, a no‑code CMS, and a prerendered, shareable blog.
 
 <p>
   <img src="https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=white" alt="react" />

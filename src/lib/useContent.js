@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { myProjects, honors } from '../constants/index.js';
 import { posts as fallbackPosts, getPost as getFallbackPost } from '../content/posts.js';
 
-const byOrder = (a, b) => (a.order ?? 99) - (b.order ?? 99);
-
 /**
- * Content read layer. Every hook renders the bundled `constants` / `posts.js`
+ * Content read layer. Every hook renders the bundled `posts.js`
  * content immediately — so the page is never empty, the prerender has data, and
  * the site keeps working even if Sanity is unreachable — then swaps in live
  * Sanity content once it loads. A failed/empty fetch silently keeps the fallback.
@@ -15,9 +12,10 @@ const byOrder = (a, b) => (a.order ?? 99) - (b.order ?? 99);
  * out of the initial bundle; it only loads after first paint, and because the
  * fallback is the same content, the swap is invisible.
  */
-function useSanityList(queryName, mapName, initFallback) {
+function useSanityList(queryName, mapName, initFallback, enabled = true) {
   const [data, setData] = useState(initFallback);
   useEffect(() => {
+    if (!enabled) return undefined;
     let alive = true;
     import('./sanity.js')
       .then((m) => m.sanity.fetch(m[queryName]).then((rows) => ({ rows, map: m[mapName] })))
@@ -28,20 +26,13 @@ function useSanityList(queryName, mapName, initFallback) {
     return () => {
       alive = false;
     };
-  }, [queryName, mapName]);
+  }, [queryName, mapName, enabled]);
   return data;
 }
 
-export function useProjects() {
-  return useSanityList('projectsQuery', 'mapProject', () => [...myProjects].sort(byOrder));
-}
-
-export function useAwards() {
-  return useSanityList('awardsQuery', 'mapAward', () => honors);
-}
-
-export function usePosts() {
-  return useSanityList('postsQuery', 'mapPost', () => fallbackPosts);
+// `enabled` lets a below-the-fold caller hold the Sanity fetch until it is near the viewport.
+export function usePosts(enabled = true) {
+  return useSanityList('postsQuery', 'mapPost', () => fallbackPosts, enabled);
 }
 
 export function usePost(slug) {

@@ -20,7 +20,7 @@ npm run dev        # http://localhost:5173  (also serves the AI chat via a dev p
 **Steps:** Hard-refresh `/` (Ctrl+Shift+R).
 **Expected:**
 - Warm espresso background, film grain, amber accents, Fraunces serif headings.
-- Hero: "Hi, I am" / **Ing Zhen.** / "Software *Engineer* · AI · RPA" / tagline about UiPath, Java/OSGi, agentic AI.
+- Hero: "Hi, I am" / **Ing Zhen.** / "Software *Engineer* · AI · Automation" / tagline about Bedrock agents and the control tower.
 - 3 impact stats (Kaggle 2nd · EY Champion RM12k · First-Class). No "RM370k+".
 - 3D avatar on the right, **idling** (not a T-pose), leaning toward your mouse, base fading into the page.
 - "Hi, I am" is **not** hidden under the navbar.
@@ -41,7 +41,7 @@ npm run dev        # http://localhost:5173  (also serves the AI chat via a dev p
 ## 3. Sections (scan for the editorial look — varied, not identical boxes)
 - **About (01):** portrait with amber corner-brackets + small globe; pull-quote; inline facts (Based in / Focus / Status ● Open to work); Download Résumé / Get in touch / click-to-copy email (click the email → "Copied ✓").
 - **Skills (02):** numbered index rows (01 Languages … 06 Tools), brand-colored logos, hairline dividers.
-- **Technical Experience (03):** 3D avatar (animates on hovering each role) + Maxis (Software Engineer · AI & RPA → Innovation Intern) + LTL. OSGi/UiPath/agentic AI wording present.
+- **Technical Experience (03):** 3D avatar (animates on hovering each role) + Maxis (Software Engineer · AI & Automation → Innovation Intern). Bedrock agents, Control Tower and team-lead wording present.
 - **Leadership (04):** timeline, **top 3** only (AIESEC President first).
 - **Selected Work (05):** featured 3D computer + details + Live/Code links; tech filter chips (click "React" etc. to filter); grid cards with brand logos + award badges; clicking a card loads it in the showcase.
 - **Awards (06):** 4 big alternating image rows (APAC, UrbanFloodBench, EY, UMHackathon) with prize badges + "winning photo coming soon" placeholders; "Also recognised —" line below.

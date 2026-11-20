@@ -8,37 +8,40 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href="https://ingzhenlee-portfolio.vercel.app/" />
-    <meta name="theme-color" content="#14110E" />
+    <meta name="theme-color" content="#2338C4" />
+    <link rel="preload" href="/fonts/general-sans.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/node_modules/@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
 
-    <title>Ing Zhen Lee — Software Engineer (AI &amp; RPA)</title>
+    <title>Ing Zhen Lee — Software Engineer (AI &amp; Automation)</title>
     <meta
       name="description"
-      content="Ing Zhen Lee — Software Engineer (AI & RPA) at Maxis and First-Class Honours Computer Science graduate. Kaggle global runner-up and EY national champion. I build intelligent automation systems."
+      content="Ing Zhen Lee — Software Engineer (AI & Automation) at Maxis. I build production multi-agent LLM systems on AWS and the automation around them. Kaggle 2nd of 264, EY national champion."
     />
     <meta name="author" content="Lee Ing Zhen" />
     <meta
       name="keywords"
-      content="Ing Zhen Lee, Software Engineer, AI, RPA, Machine Learning, GenAI, Automation, Malaysia, Portfolio, Maxis, Universiti Malaya"
+      content="Ing Zhen Lee, Software Engineer, AI, Automation, Agentic AI, LLM, Machine Learning, GenAI, Amazon Bedrock, Malaysia, Portfolio, Maxis, Universiti Malaya"
     />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ingzhenlee-portfolio.vercel.app/" />
-    <meta property="og:title" content="Ing Zhen Lee — Software Engineer (AI & RPA)" />
+    <meta property="og:title" content="Ing Zhen Lee — Software Engineer (AI & Automation)" />
     <meta
       property="og:description"
-      content="First-Class Honours CS grad & Software Engineer at Maxis. Kaggle global runner-up, EY national champion. I build intelligent automation systems."
+      content="Software Engineer (AI & Automation) at Maxis. Production multi-agent systems on AWS, Kaggle 2nd of 264, EY national champion."
     />
-    <meta property="og:image" content="https://ingzhenlee-portfolio.vercel.app/assets/iz-portrait.png" />
+    <meta property="og:image" content="https://ingzhenlee-portfolio.vercel.app/og/default.png" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ing Zhen Lee — Software Engineer (AI & RPA)" />
+    <meta name="twitter:title" content="Ing Zhen Lee — Software Engineer (AI & Automation)" />
     <meta
       name="twitter:description"
-      content="First-Class Honours CS grad & Software Engineer at Maxis. Kaggle global runner-up, EY national champion. I build intelligent automation systems."
+      content="Software Engineer (AI & Automation) at Maxis. Production multi-agent systems on AWS, Kaggle 2nd of 264, EY national champion."
     />
-    <meta name="twitter:image" content="https://ingzhenlee-portfolio.vercel.app/assets/iz-portrait.png" />
+    <meta name="twitter:image" content="https://ingzhenlee-portfolio.vercel.app/og/default.png" />
 
     <!-- Structured data -->
     <script type="application/ld+json">
@@ -47,9 +50,9 @@
         "@type": "Person",
         "name": "Lee Ing Zhen",
         "alternateName": "Ing Zhen Lee",
-        "jobTitle": "Software Engineer (AI & RPA)",
+        "jobTitle": "Software Engineer (AI & Automation)",
         "url": "https://ingzhenlee-portfolio.vercel.app/",
-        "image": "https://ingzhenlee-portfolio.vercel.app/assets/iz-portrait.png",
+        "image": "https://ingzhenlee-portfolio.vercel.app/assets/iz-portrait.webp",
         "email": "mailto:ingzhen2003@gmail.com",
         "worksFor": { "@type": "Organization", "name": "Maxis" },
         "alumniOf": { "@type": "CollegeOrUniversity", "name": "University of Malaya" },
@@ -63,7 +66,33 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- The static block is what paints (and what crawlers read) before the JS arrives. It mirrors
+         the bar and the top of pages/Home.jsx; React replaces it on mount. scripts/prerender.mjs swaps
+         the <main> for the page's own heading on /blog and /work pages. -->
+    <div id="root"><!--static-->
+      <div class="proto">
+        <nav class="pnav" aria-label="Site"><div class="pnav-in"><a class="pnav-m" href="/" aria-label="IZ, Lee Ing Zhen, home">IZ</a></div></nav>
+        <main>
+          <div class="home">
+            <header class="hero">
+              <p class="hero-k">Software Engineer · AI &amp; Automation · Maxis, Malaysia</p>
+              <h1 class="hero-n">Ing Zhen Lee</h1>
+              <p class="hero-t">I build systems that take the manual work out.</p>
+              <ul class="hero-g">
+                <li><b>30 → 5 min</b> a case, with the agents I built at Maxis</li>
+                <li><b>AI First Innovation Award</b> Maxis, Q2 2026</li>
+                <li><b>2nd of 264 teams</b> UrbanFloodBench, with a published paper</li>
+              </ul>
+              <div class="hero-cta">
+                <a class="btn" href="/assets/iz_resume.pdf" target="_blank" rel="noreferrer">Résumé (PDF)</a>
+                <a class="btn quiet" href="mailto:ingzhen2003@gmail.com">Email me</a>
+              </div>
+              <p class="hero-s">Amazon Bedrock · Step Functions · Lambda · Python · TypeScript · React · Kotlin</p>
+            </header>
+          </div>
+        </main>
+      </div>
+    <!--/static--></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

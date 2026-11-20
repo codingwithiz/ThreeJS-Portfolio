@@ -1,3 +1,9 @@
 {
-  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }]
+  "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
+  "headers": [
+    {
+      "source": "/(assets|textures|icons|og|fonts)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=2592000" }]
+    }
+  ]
 }

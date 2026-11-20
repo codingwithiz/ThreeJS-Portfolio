@@ -1,21 +1,15 @@
-const Alert = ({ type, text }) => {
-  return (
-    <div className="fixed bottom-5 right-5 flex justify-center items-center z-50">
-      <div
-        className={`p-2 ${
-          type === 'danger' ? 'bg-red-800' : 'bg-blue-800'
-        } items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex rounded-md p-5`}
-        role="alert">
-        <p
-          className={`flex rounded-full ${
-            type === 'danger' ? 'bg-red-500' : 'bg-blue-500'
-          } uppercase px-2 py-1 text-xs font-semibold mr-3`}>
-          {type === 'danger' ? 'Failed' : 'Success'}
-        </p>
-        <p className="mr-2 text-left">{text}</p>
-      </div>
-    </div>
+import { createPortal } from 'react-dom';
+
+// On <body>: the page shell is a CSS container, which would trap position:fixed.
+const Alert = ({ type, text }) =>
+  createPortal(
+    <div
+      role="alert"
+      className="fixed bottom-5 left-5 z-50 flex max-w-[calc(100vw-2.5rem)] items-center gap-3 rounded-lg border-2 border-night bg-night px-4 py-3 text-sm text-ink">
+      <span aria-hidden="true" className={`h-2 w-2 shrink-0 rounded-full ${type === 'danger' ? 'bg-clay' : 'bg-sage'}`} />
+      {text}
+    </div>,
+    document.body,
   );
-};
 
 export default Alert;

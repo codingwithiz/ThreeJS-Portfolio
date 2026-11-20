@@ -2,6 +2,8 @@ import process from 'node:process';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 
+import { n as liveChecks } from './scripts/check-live.mjs';
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
@@ -11,23 +13,8 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    build: {
-      chunkSizeWarningLimit: 900,
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (!id.includes('node_modules')) return undefined;
-            if (id.includes('react-globe') || id.includes('three-globe')) return 'globe-vendor';
-            if (id.includes('@react-three') || id.includes('three-stdlib')) return 'r3f-vendor';
-            if (id.includes('/three/') || id.includes('\\three\\')) return 'three-vendor';
-            if (id.includes('framer-motion')) return 'motion-vendor';
-            if (id.includes('gsap')) return 'gsap-vendor';
-            if (id.includes('hls.js')) return 'hls-vendor';
-            return undefined;
-          },
-        },
-      },
-    },
+    // the build receipt on the home page prints how many checks passed for this build
+    define: { __LIVE_CHECKS__: liveChecks },
     plugins: [
       react(),
       {

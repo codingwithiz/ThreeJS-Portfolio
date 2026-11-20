@@ -20,4 +20,34 @@
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://ingzhenlee-portfolio.vercel.app/work/maxis-agents</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ingzhenlee-portfolio.vercel.app/work/iz-finance</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ingzhenlee-portfolio.vercel.app/work/crux</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ingzhenlee-portfolio.vercel.app/work/bina</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ingzhenlee-portfolio.vercel.app/work/urbanfloodbench</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://ingzhenlee-portfolio.vercel.app/work/niagamap</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

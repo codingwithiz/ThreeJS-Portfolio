@@ -4,42 +4,26 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        generalsans: ['General Sans', 'sans-serif'],
-        display: ['Fraunces', 'serif'],
+        sans: ['General Sans', 'system-ui', 'sans-serif'],
+        display: ['Bricolage Grotesque', 'General Sans', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'Consolas', 'monospace'],
       },
       colors: {
-        // Legacy tokens (kept while sections are migrated to Terra Nocturne)
-        black: {
-          DEFAULT: '#000',
-          100: '#010103',
-          200: '#0E0E10',
-          300: '#1C1C21',
-          500: '#3A3A49',
-          600: '#1A1A1A',
-        },
-        white: {
-          DEFAULT: '#FFFFFF',
-          800: '#E4E4E6',
-          700: '#D6D9E9',
-          600: '#AFB0B6',
-          500: '#62646C',
-        },
-
-        // Terra Nocturne — warm organic dark (see DESIGN.md)
-        bg: '#14110E',
+        // The hand — a cobalt card table (see DESIGN.md)
+        bg: '#2338C4',
+        night: '#14110F', // card borders, hard shadows, the ticker band
         surface: {
-          DEFAULT: '#211B14',
-          light: '#2A2118',
+          DEFAULT: '#1B2CA3',
+          light: '#1A2890',
         },
-        edge: '#33291E',
+        edge: '#5565E0',
         ink: {
-          DEFAULT: '#F4EDE2',
-          muted: '#B7A893',
+          DEFAULT: '#FFF7E6',
+          muted: '#CDD3FF',
         },
-        amber: '#E3A857',
-        accent: '#E3A857',
-        sage: '#8FA67E',
-        clay: '#C75D43',
+        amber: '#FFD23F', // accent: primary action, links, metrics
+        sage: '#3DDC97', // pass
+        clay: '#FF6B3D', // fail
       },
     },
   },

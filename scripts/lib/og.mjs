@@ -1,5 +1,5 @@
 /**
- * Renders a 1200×630 "Terra Nocturne" social share card (PNG) with Satori + resvg.
+ * Renders a 1200×630 social share card (PNG) with Satori + resvg.
  * Satori lays out a flexbox tree → SVG (text baked to vector paths using the
  * provided fonts), then resvg rasterises that SVG → PNG. No system fonts needed.
  */
@@ -15,17 +15,20 @@ const font = (p) => readFileSync(join(ROOT, 'node_modules', p));
 const FONTS = [
   { name: 'Inter', data: font('@fontsource/inter/files/inter-latin-400-normal.woff'), weight: 400, style: 'normal' },
   { name: 'Inter', data: font('@fontsource/inter/files/inter-latin-600-normal.woff'), weight: 600, style: 'normal' },
-  { name: 'Fraunces', data: font('@fontsource/fraunces/files/fraunces-latin-900-normal.woff'), weight: 900, style: 'normal' },
+  { name: 'Bricolage', data: font('@fontsource/bricolage-grotesque/files/bricolage-grotesque-latin-700-normal.woff'), weight: 700, style: 'normal' },
 ];
 
-const C = { bg: '#14110E', ink: '#F4EDE2', muted: '#B7A893', amber: '#E3A857', edge: '#33291E' };
+const TABLE = { bg: '#2338C4', ink: '#FFF7E6', muted: '#CDD3FF', amber: '#FFD23F', edge: '#5565E0' };
+const NIGHT = '#14110F';
 
 // Minimal hyperscript so we can build Satori's element tree without JSX.
 function h(type, props = {}, ...children) {
   return { type, props: { ...props, children: children.length <= 1 ? children[0] : children } };
 }
 
-function card({ eyebrow, title, footer }) {
+// `color` is a project's card colour: the share image becomes that card, with night text.
+function card({ eyebrow, title, footer, color }) {
+  const C = color ? { bg: color, ink: NIGHT, muted: NIGHT, amber: NIGHT, edge: NIGHT } : TABLE;
   return h(
     'div',
     {
@@ -43,11 +46,8 @@ function card({ eyebrow, title, footer }) {
         overflow: 'hidden',
       },
     },
-    // Decorative topographic rings (echo the hero's contour motif)
-    h('div', { style: { position: 'absolute', top: '-300px', right: '-240px', width: '660px', height: '660px', borderRadius: '9999px', border: '2px solid rgba(227,168,87,0.16)', display: 'flex' } }),
-    h('div', { style: { position: 'absolute', top: '-170px', right: '-110px', width: '430px', height: '430px', borderRadius: '9999px', border: '2px solid rgba(227,168,87,0.10)', display: 'flex' } }),
     // Inner edge frame
-    h('div', { style: { position: 'absolute', top: '24px', right: '24px', bottom: '24px', left: '24px', borderRadius: '30px', border: `1px solid ${C.edge}`, display: 'flex' } }),
+    h('div', { style: { position: 'absolute', top: '24px', right: '24px', bottom: '24px', left: '24px', border: `1px solid ${C.edge}`, display: 'flex' } }),
     // Eyebrow
     h(
       'div',
@@ -56,12 +56,12 @@ function card({ eyebrow, title, footer }) {
       h('div', { style: { display: 'flex', fontSize: '24px', fontWeight: 600, letterSpacing: 3, textTransform: 'uppercase', color: C.amber } }, eyebrow),
     ),
     // Title
-    h('div', { style: { display: 'flex', maxWidth: '1010px', fontFamily: 'Fraunces', fontWeight: 900, fontSize: '72px', lineHeight: 1.06, color: C.ink } }, title),
+    h('div', { style: { display: 'flex', maxWidth: '1010px', fontFamily: 'Bricolage', fontWeight: 700, fontSize: '72px', lineHeight: 1.06, color: C.ink } }, title),
     // Footer
     h(
       'div',
       { style: { display: 'flex', flexDirection: 'column' } },
-      h('div', { style: { display: 'flex', width: '84px', height: '6px', borderRadius: '9999px', backgroundColor: C.amber, marginBottom: '24px' } }),
+      h('div', { style: { display: 'flex', width: '84px', height: '2px', backgroundColor: C.amber, marginBottom: '24px' } }),
       h('div', { style: { display: 'flex', fontSize: '27px', fontWeight: 400, color: C.muted } }, footer),
     ),
   );
