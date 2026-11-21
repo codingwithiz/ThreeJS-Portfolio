@@ -79,10 +79,11 @@ export default async function handler(req, res) {
 
     const client = new OpenAI({ apiKey });
     const stream = await client.chat.completions.create({
-      model: 'gpt-4.1-mini',
+      // GPT-6 Luna: OpenAI's low-cost tier ($0.10 / $0.50 per 1M tokens). Short factual answers need no reasoning.
+      model: 'gpt-6-luna',
+      reasoning_effort: 'none',
       stream: true,
-      temperature: 0.5,
-      max_tokens: 500,
+      max_completion_tokens: 500,
       messages: [{ role: 'system', content: SYSTEM }, ...trimmed],
     });
 
